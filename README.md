@@ -6,6 +6,7 @@ I did it because I want a portfolio and cuz why not
 
 It's as faithfull to the original as I can get it 
 if you have any recommendations or ideas feel free to contact me
+I should mention that the website does not work on mobile devices and will never do it's simply near impossible to achive a simimar looking effect on mobile and it's not made to be a simple personal website and a novelty
 
 
 ## How to Use
