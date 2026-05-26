@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persona 3 Reload - UI</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Jura:wght@700&family=Oswald:wght@400;600;700&family=Teko:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Background Video -->
+    <video class="herovideo" id="bg_video" oncontextmenu="return false" playsinline loop muted>
+        <source src="assets/hero_loop.mp4" type="video/mp4">
+    </video>
+
+    <!-- Side Index Number -->
+    <div class="side-index" id="side_index">
+        <span class="z-1">01</span>
+    </div>
+
+    <!-- About Me Photos -->
+    <div id="about_me_photos" class="photos-wrapper">
+        <div class="photo-container">
+            <div class="photo-shape-bg"></div>
+            <div class="photo-shape-fg">
+                <img src="assets/1.jpg" alt="photo 1">
+            </div>
+        </div>
+        <div class="photo-container">
+            <div class="photo-shape-bg"></div>
+            <div class="photo-shape-fg">
+                <img src="assets/2.jpg" alt="photo 2">
+            </div>
+        </div>
+        <div class="photo-container">
+            <div class="photo-shape-bg"></div>
+            <div class="photo-shape-fg">
+                <img src="assets/3.jpg" alt="photo 3">
+            </div>
+        </div>
+        <div class="photo-container">
+            <div class="photo-shape-bg"></div>
+            <div class="photo-shape-fg">
+                <img src="assets/4.jpg" alt="photo 4">
+            </div>
+        </div>
+        <div class="photo-container">
+            <div class="photo-shape-bg"></div>
+            <div class="photo-shape-fg">
+                <img src="assets/5.jpg" alt="photo 5">
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu Container -->
+    <div class="container" id="menu_container">
+        <div class="text" data-index="1" data-desc="Use a Skill">
+            <span id="m_skill" tabindex="0">SKILLS</span>
+            <div id="t_skill">
+                <span id="t_skillch">SKILLS</span>
+            </div>
+            <div id="t_skillw">
+                <span id="t_skillch1">SKILLS</span>
+            </div>
+        </div>
+        <div class="text" data-index="2" data-desc="View/Use Items">
+            <span id="m_item" tabindex="0">ITEMS</span>
+            <div id="t_item">
+                <span id="t_itemch">ITEMS</span>
+            </div>
+            <div id="t_itemw">
+                <span id="t_itemch1">ITEMS</span>
+            </div>
+        </div>
+
+        <div class="text" data-index="4" data-desc="View/Change Personas">
+            <span id="m_persona" tabindex="0">ABOUT ME</span>
+            <div id="t_persona">
+                <span id="t_personach">ABOUT ME</span>
+            </div>
+            <div id="t_personaw">
+                <span id="t_personach1">ABOUT ME</span>
+            </div>
+        </div>
+
+
+        <div class="text" data-index="7" data-desc="View Social Links">
+            <span id="m_socialLink" tabindex="0">SOCIAL LINK</span>
+            <div id="t_socialLink">
+                <span id="t_socialLinkch">SOCIAL LINK</span>
+            </div>
+            <div id="t_socialLinkw">
+                <span id="t_socialLinkch1">SOCIAL LINK</span>
+            </div>
+        </div>
+        <div class="text" data-index="8" data-desc="View Calendar">
+            <span id="m_calendar" tabindex="0">PROJECTS</span>
+            <div id="t_calendar">
+                <span id="t_calendarch">PROJECTS</span>
+            </div>
+            <div id="t_calendarw">
+                <span id="t_calendarch1">PROJECTS</span>
+            </div>
+        </div>
+        <div class="text" data-index="9" data-desc="View Settings">
+            <span id="m_system" tabindex="0">SYSTEM</span>
+            <div id="t_system">
+                <span id="t_systemch">SYSTEM</span>
+            </div>
+            <div id="t_systemw">
+                <span id="t_systemch1">SYSTEM</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Command Bar -->
+    <div class="bottom-bar" id="bottom_bar">
+        <div class="description" id="cmd_desc">Use a Skill</div>
+        <div class="divider">
+            <span class="divider-label">Command</span>
+            <div class="divider-line"></div>
+        </div>
+        <div class="controls">
+            <div class="control">
+                <img class="control-key" src="assets/steamdeck_button_a.svg" /> Confirm
+            </div>
+            <div class="control">
+                <img class="control-key" src="assets/steamdeck_button_b.svg" /> Back
+            </div>
+        </div>
+    </div>
+
+    <!-- Submenu Transition Layers -->
+    <div class="submenu-overlay" id="submenu_overlay">
+        <!-- Submenu Background Video -->
+        <video class="submenu-video" id="submenu_video" oncontextmenu="return false" playsinline loop muted>
+            <source src="assets/background.mp4" type="video/mp4">
+        </video>
+
+        <!-- Mask layers for the circular reveal transition -->
+        <div class="submenu-reveal-2" id="reveal_2"></div>
+        <div class="submenu-reveal" id="reveal_1"></div>
+
+        <!-- Global Submenu Back Button -->
+        <div class="submenu-back" id="submenu_back_btn">
+            <span class="control-key">ESC</span>
+        </div>
+
+        <!-- Panels Wrapper -->
+        <div class="submenu-panels-container">
+            <!-- Panel: SKILLS -->
+            <div class="submenu-panel" id="panel_skill">
+                <div class="bold-shape-container">
+                    <div class="bold-shape-bg"></div>
+                    <div class="bold-shape-fg">
+                        <h2 class="placeholder-title">SKILLS</h2>
+                        <p class="placeholder-text">
+                            I like photography and programming :D
+                            <iframe
+                                src="https://github-readme-stats.hackclub.dev/api/wakatime?username=30121&api_domain=hackatime.hackclub.com&theme=shadow_blue&custom_title=Hackatime+Stats&layout=compact&cache_seconds=0&langs_count=8"
+                                width="600" height="200" frameborder="0" scrolling="no"></iframe>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel: ITEMS -->
+            <div class="submenu-panel" id="panel_item">
+                <div class="bold-shape-container">
+                    <div class="bold-shape-bg"></div>
+                    <div class="bold-shape-fg">
+                        <h2 class="placeholder-title">ITEMS</h2>
+                        <p class="placeholder-text">Inventory : <br>
+                            • HP PAVILLION dx-15xx (2020) <br>
+                            • Samsung WB30F (2013) <br>
+                            • PS4 Slim (2016) <br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Panel: ABOUT ME -->
+            <div class="submenu-panel" id="panel_persona">
+                <div class="bold-shape-container">
+                    <div class="bold-shape-bg"></div>
+                    <div class="bold-shape-fg">
+                        <h2 class="placeholder-title">ABOUT ME</h2>
+                        <p class="placeholder-text">16 yo kid building random stupid stuff on his free time cuz why not
+                            <br> I like photgraphy and music
+                            <span class="italic">(and persona like obviously)</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!-- Panel: SOCIAL LINK -->
+            <div class="submenu-panel" id="panel_socialLink">
+                <div class="bold-shape-container">
+                    <div class="bold-shape-bg"></div>
+                    <div class="bold-shape-fg">
+                        <h2 class="placeholder-title">SOCIAL LINK</h2>
+                        <p class="placeholder-text">I don't use much social apps <span>(im lowkey autistic)</span><br>
+                            Hit me up on mybe Discord (dakpol._) or prob <a
+                                href="https://hackclub.enterprise.slack.com/team/U0AJAB37BUK" target="_blank">Slack</a>
+                            (Warelovvvvvv)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel: PROJECTS -->
+            <div class="submenu-panel" id="panel_calendar">
+                <div class="bold-shape-container">
+                    <div class="bold-shape-bg"></div>
+                    <div class="bold-shape-fg">
+                        <h2 class="placeholder-title">PROJECTS</h2>
+                        <p class="placeholder-text">You can always check my github
+                            <span class="italic">(down below)</span><br>
+                            But most notable ones are : <br>
+                            • <a href="https://github.com/notwewnothing/SpotiFLac/releases/tag/v1.1.0"
+                                target="_blank">AudioPhile</a>
+                            (it's not maintained tho)<br>
+                            • <a href="https://github.com/notwewnothing/workspace-commander"
+                                target="_blank">MacroPad</a>
+                            (my project for flavortown)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel: SYSTEM -->
+            <div class="submenu-panel" id="panel_system">
+                <div class="bold-shape-container">
+                    <div class="bold-shape-bg"></div>
+                    <div class="bold-shape-fg">
+                        <h2 class="placeholder-title">SYSTEM</h2>
+                        <p class="placeholder-text">Idk what to add here<br>anyways enjoy 4 lains dancing<br>
+                            <img src="assets/lain.gif" alt="lain dancing" style="width:100px;height:100px;">
+                            <img src="assets/lain.gif" alt="lain dancing" style="width:100px;height:100px;">
+                            <img src="assets/lain.gif" alt="lain dancing" style="width:100px;height:100px;">
+                            <img src="assets/lain.gif" alt="lain dancing" style="width:100px;height:100px;">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer" id="site_footer">
+        <a href="https://www.instagram.com/poldak._/" target="_blank" rel="noopener noreferrer" class="social-icon"
+            aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+        </a>
+        <a href="https://github.com/notwewnothing" target="_blank" rel="noopener noreferrer" class="social-icon"
+            aria-label="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+            </svg>
+        </a>
+        <span class="footer-text">made with 🩵 by Poldak</span>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
