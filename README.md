@@ -22,3 +22,11 @@ You don't need any special server environments to run this code locally.
 3.  **Run the project:**
     Simply open the `index.html` file in your preferred web browser to view the UI.
 
+## 📂 Project Structure
+
+```text
+├── index.html       # Main structure & portfolio content
+├── css/
+│   └── style.css    # Layout, angled designs, and custom animations
+└── js/
+    └── main.js      # Menu logic, tab switching, and interaction handling
