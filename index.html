@@ -9,258 +9,267 @@
         href="https://fonts.googleapis.com/css2?family=Jura:wght@700&family=Oswald:wght@400;600;700&family=Teko:wght@500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style type="text/css">
+        body {
+            cursor: url('data:image/x-icon;base64,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'), auto;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- Loading Screen -->
-    <div id="loading_screen" class="loading-screen">
-        <div class="loader"></div>
-        <div class="loading-text">LOADING...</div>
-    </div>
-
-    <!-- Background Video -->
-    <video class="herovideo" id="bg_video" oncontextmenu="return false" playsinline loop muted>
-        <source src="assets/hero_loop.mp4" type="video/mp4">
-    </video>
-
-    <!-- Side Index Number -->
-    <div class="side-index" id="side_index">
-        <span class="z-1">01</span>
-    </div>
-
-    <!-- About Me Photos -->
-    <div id="about_me_photos" class="photos-wrapper">
-        <div class="photo-container">
-            <div class="photo-shape-bg"></div>
-            <div class="photo-shape-fg">
-                <img src="assets/1.jpg" alt="photo 1">
-            </div>
-        </div>
-        <div class="photo-container">
-            <div class="photo-shape-bg"></div>
-            <div class="photo-shape-fg">
-                <img src="assets/2.jpg" alt="photo 2">
-            </div>
-        </div>
-        <div class="photo-container">
-            <div class="photo-shape-bg"></div>
-            <div class="photo-shape-fg">
-                <img src="assets/3.jpg" alt="photo 3">
-            </div>
-        </div>
-        <div class="photo-container">
-            <div class="photo-shape-bg"></div>
-            <div class="photo-shape-fg">
-                <img src="assets/4.jpg" alt="photo 4">
-            </div>
-        </div>
-        <div class="photo-container">
-            <div class="photo-shape-bg"></div>
-            <div class="photo-shape-fg">
-                <img src="assets/5.jpg" alt="photo 5">
-            </div>
-        </div>
-    </div>
-
-    <!-- Menu Container -->
-    <div class="container" id="menu_container">
-        <div class="text" data-index="1" data-desc="Use a Skill">
-            <span id="m_skill" tabindex="0">SKILLS</span>
-            <div id="t_skill">
-                <span id="t_skillch">SKILLS</span>
-            </div>
-            <div id="t_skillw">
-                <span id="t_skillch1">SKILLS</span>
-            </div>
-        </div>
-        <div class="text" data-index="2" data-desc="View/Use Items">
-            <span id="m_item" tabindex="0">ITEMS</span>
-            <div id="t_item">
-                <span id="t_itemch">ITEMS</span>
-            </div>
-            <div id="t_itemw">
-                <span id="t_itemch1">ITEMS</span>
-            </div>
+    <div id="screen">
+        <!-- Loading Screen -->
+        <div id="loading_screen" class="loading-screen">
+            <div class="loader"></div>
+            <div class="loading-text">LOADING...</div>
         </div>
 
-        <div class="text" data-index="4" data-desc="View/Change Personas">
-            <span id="m_persona" tabindex="0">ABOUT ME</span>
-            <div id="t_persona">
-                <span id="t_personach">ABOUT ME</span>
-            </div>
-            <div id="t_personaw">
-                <span id="t_personach1">ABOUT ME</span>
-            </div>
-        </div>
-
-
-        <div class="text" data-index="7" data-desc="View Social Links">
-            <span id="m_socialLink" tabindex="0">SOCIAL LINK</span>
-            <div id="t_socialLink">
-                <span id="t_socialLinkch">SOCIAL LINK</span>
-            </div>
-            <div id="t_socialLinkw">
-                <span id="t_socialLinkch1">SOCIAL LINK</span>
-            </div>
-        </div>
-        <div class="text" data-index="8" data-desc="View Calendar">
-            <span id="m_calendar" tabindex="0">PROJECTS</span>
-            <div id="t_calendar">
-                <span id="t_calendarch">PROJECTS</span>
-            </div>
-            <div id="t_calendarw">
-                <span id="t_calendarch1">PROJECTS</span>
-            </div>
-        </div>
-        <div class="text" data-index="9" data-desc="View Settings">
-            <span id="m_system" tabindex="0">SYSTEM</span>
-            <div id="t_system">
-                <span id="t_systemch">SYSTEM</span>
-            </div>
-            <div id="t_systemw">
-                <span id="t_systemch1">SYSTEM</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bottom Command Bar -->
-    <div class="bottom-bar" id="bottom_bar">
-        <div class="description" id="cmd_desc">Use a Skill</div>
-        <div class="divider">
-            <span class="divider-label">Command</span>
-            <div class="divider-line"></div>
-        </div>
-        <div class="controls">
-            <div class="control">
-                <img class="control-key" src="assets/steamdeck_button_a.svg" /> Confirm
-            </div>
-            <div class="control">
-                <img class="control-key" src="assets/steamdeck_button_b.svg" /> Back
-            </div>
-        </div>
-    </div>
-
-    <!-- Submenu Transition Layers -->
-    <div class="submenu-overlay" id="submenu_overlay">
-        <!-- Submenu Background Video -->
-        <video class="submenu-video" id="submenu_video" oncontextmenu="return false" playsinline loop muted>
-            <source src="assets/background.mp4" type="video/mp4">
+        <!-- Background Video -->
+        <video class="herovideo" id="bg_video" oncontextmenu="return false" playsinline loop muted>
+            <source src="assets/hero_loop.mp4" type="video/mp4">
         </video>
 
-        <!-- Mask layers for the circular reveal transition -->
-        <div class="submenu-reveal-2" id="reveal_2"></div>
-        <div class="submenu-reveal" id="reveal_1"></div>
-
-        <!-- Global Submenu Back Button -->
-        <div class="submenu-back" id="submenu_back_btn">
-            <span class="control-key">ESC</span>
+        <!-- Side Index Number -->
+        <div class="side-index" id="side_index">
+            <span class="z-1">01</span>
         </div>
 
-        <!-- Panels Wrapper -->
-        <div class="submenu-panels-container">
-            <!-- Panel: SKILLS -->
-            <div class="submenu-panel" id="panel_skill">
-                <div class="bold-shape-container">
-                    <div class="bold-shape-bg"></div>
-                    <div class="bold-shape-fg">
-                        <h2 class="placeholder-title">SKILLS</h2>
-                        <p class="placeholder-text">
-                            I like photography and programming :D
-                            <iframe
-                                src="https://github-readme-stats.hackclub.dev/api/wakatime?username=30121&api_domain=hackatime.hackclub.com&theme=shadow_blue&custom_title=Hackatime+Stats&layout=compact&cache_seconds=0&langs_count=8"
-                                width="600" height="200" frameborder="0" scrolling="no"></iframe>
-                        </p>
-                    </div>
+        <!-- About Me Photos -->
+        <div id="about_me_photos" class="photos-wrapper">
+            <div class="photo-container">
+                <div class="photo-shape-bg"></div>
+                <div class="photo-shape-fg">
+                    <img src="assets/1.jpg" alt="photo 1">
                 </div>
             </div>
-
-            <!-- Panel: ITEMS -->
-            <div class="submenu-panel" id="panel_item">
-                <div class="bold-shape-container">
-                    <div class="bold-shape-bg"></div>
-                    <div class="bold-shape-fg">
-                        <h2 class="placeholder-title">ITEMS</h2>
-                        <p class="placeholder-text">Inventory : <br>
-                            • HP PAVILLION dx-15xx (2020) <br>
-                            • Samsung WB30F (2013) <br>
-                            • PS4 Slim (2016) <br>
-                        </p>
-                    </div>
+            <div class="photo-container">
+                <div class="photo-shape-bg"></div>
+                <div class="photo-shape-fg">
+                    <img src="assets/2.jpg" alt="photo 2">
                 </div>
             </div>
-
-
-
-            <!-- Panel: ABOUT ME -->
-            <div class="submenu-panel" id="panel_persona">
-                <div class="bold-shape-container">
-                    <div class="bold-shape-bg"></div>
-                    <div class="bold-shape-fg">
-                        <h2 class="placeholder-title">ABOUT ME</h2>
-                        <p class="placeholder-text">16 yo kid building random stupid stuff on his free time cuz why not
-                            <br> I like photgraphy and music
-                            <span class="italic">(and persona like obviously)</span>
-                        </p>
-                    </div>
+            <div class="photo-container">
+                <div class="photo-shape-bg"></div>
+                <div class="photo-shape-fg">
+                    <img src="assets/3.jpg" alt="photo 3">
                 </div>
             </div>
-
-
-
-
-            <!-- Panel: SOCIAL LINK -->
-            <div class="submenu-panel" id="panel_socialLink">
-                <div class="bold-shape-container">
-                    <div class="bold-shape-bg"></div>
-                    <div class="bold-shape-fg">
-                        <h2 class="placeholder-title">SOCIAL LINK</h2>
-                        <p class="placeholder-text">I don't use much social apps <span>(im lowkey autistic)</span><br>
-                            Hit me up on mybe Discord (dakpol._) or prob <a
-                                href="https://hackclub.enterprise.slack.com/team/U0AJAB37BUK" target="_blank">Slack</a>
-                            (Warelovvvvvv)
-                        </p>
-                    </div>
+            <div class="photo-container">
+                <div class="photo-shape-bg"></div>
+                <div class="photo-shape-fg">
+                    <img src="assets/4.jpg" alt="photo 4">
                 </div>
             </div>
-
-            <!-- Panel: PROJECTS -->
-            <div class="submenu-panel" id="panel_calendar">
-                <div class="bold-shape-container">
-                    <div class="bold-shape-bg"></div>
-                    <div class="bold-shape-fg">
-                        <h2 class="placeholder-title">PROJECTS</h2>
-                        <p class="placeholder-text">You can always check my github
-                            <span class="italic">(down below)</span><br>
-                            But most notable ones are : <br>
-                            • <a href="https://github.com/notwewnothing/SpotiFLac/releases/tag/v1.1.0"
-                                target="_blank">AudioPhile</a>
-                            (it's not maintained tho)<br>
-                            • <a href="https://github.com/notwewnothing/workspace-commander"
-                                target="_blank">MacroPad</a>
-                            (my project for flavortown)
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Panel: SYSTEM -->
-            <div class="submenu-panel" id="panel_system">
-                <div class="bold-shape-container">
-                    <div class="bold-shape-bg"></div>
-                    <div class="bold-shape-fg">
-                        <h2 class="placeholder-title">SYSTEM</h2>
-                        <p class="placeholder-text">Idk what to add here<br>anyways enjoy 4 lains dancing<br>
-                            <img src="assets/lain.gif" alt="lain dancing" style="width:100px;height:100px;">
-                            <img src="assets/lain.gif" alt="lain dancing" style="width:100px;height:100px;">
-                            <img src="assets/lain.gif" alt="lain dancing" style="width:100px;height:100px;">
-                            <img src="assets/lain.gif" alt="lain dancing" style="width:100px;height:100px;">
-                        </p>
-                    </div>
+            <div class="photo-container">
+                <div class="photo-shape-bg"></div>
+                <div class="photo-shape-fg">
+                    <img src="assets/5.jpg" alt="photo 5">
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Menu Container -->
+        <div class="container" id="menu_container">
+            <div class="text" data-index="1" data-desc="Use a Skill">
+                <span id="m_skill" tabindex="0">SKILLS</span>
+                <div id="t_skill">
+                    <span id="t_skillch">SKILLS</span>
+                </div>
+                <div id="t_skillw">
+                    <span id="t_skillch1">SKILLS</span>
+                </div>
+            </div>
+            <div class="text" data-index="2" data-desc="View/Use Items">
+                <span id="m_item" tabindex="0">ITEMS</span>
+                <div id="t_item">
+                    <span id="t_itemch">ITEMS</span>
+                </div>
+                <div id="t_itemw">
+                    <span id="t_itemch1">ITEMS</span>
+                </div>
+            </div>
+
+            <div class="text" data-index="4" data-desc="View/Change Personas">
+                <span id="m_persona" tabindex="0">ABOUT ME</span>
+                <div id="t_persona">
+                    <span id="t_personach">ABOUT ME</span>
+                </div>
+                <div id="t_personaw">
+                    <span id="t_personach1">ABOUT ME</span>
+                </div>
+            </div>
+
+
+            <div class="text" data-index="7" data-desc="View Social Links">
+                <span id="m_socialLink" tabindex="0">SOCIAL LINK</span>
+                <div id="t_socialLink">
+                    <span id="t_socialLinkch">SOCIAL LINK</span>
+                </div>
+                <div id="t_socialLinkw">
+                    <span id="t_socialLinkch1">SOCIAL LINK</span>
+                </div>
+            </div>
+            <div class="text" data-index="8" data-desc="View Calendar">
+                <span id="m_calendar" tabindex="0">PROJECTS</span>
+                <div id="t_calendar">
+                    <span id="t_calendarch">PROJECTS</span>
+                </div>
+                <div id="t_calendarw">
+                    <span id="t_calendarch1">PROJECTS</span>
+                </div>
+            </div>
+            <div class="text" data-index="9" data-desc="View Settings">
+                <span id="m_system" tabindex="0">SYSTEM</span>
+                <div id="t_system">
+                    <span id="t_systemch">SYSTEM</span>
+                </div>
+                <div id="t_systemw">
+                    <span id="t_systemch1">SYSTEM</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Command Bar -->
+        <div class="bottom-bar" id="bottom_bar">
+            <div class="description" id="cmd_desc">Use a Skill</div>
+            <div class="divider">
+                <span class="divider-label">Command</span>
+                <div class="divider-line"></div>
+            </div>
+            <div class="controls">
+                <div class="control">
+                    <img class="control-key" src="assets/steamdeck_button_a.svg" /> Confirm
+                </div>
+                <div class="control">
+                    <img class="control-key" src="assets/steamdeck_button_b.svg" /> Back
+                </div>
+            </div>
+        </div>
+
+        <!-- Submenu Transition Layers -->
+        <div class="submenu-overlay" id="submenu_overlay">
+            <!-- Submenu Background Video -->
+            <video class="submenu-video" id="submenu_video" oncontextmenu="return false" playsinline loop muted>
+                <source src="assets/background.mp4" type="video/mp4">
+            </video>
+
+            <!-- Mask layers for the circular reveal transition -->
+            <div class="submenu-reveal-2" id="reveal_2"></div>
+            <div class="submenu-reveal" id="reveal_1"></div>
+
+            <!-- Global Submenu Back Button -->
+            <div class="submenu-back" id="submenu_back_btn">
+                <span class="control-key">ESC</span>
+            </div>
+
+            <!-- Panels Wrapper -->
+            <div class="submenu-panels-container">
+                <!-- Panel: SKILLS -->
+                <div class="submenu-panel" id="panel_skill">
+                    <div class="bold-shape-container">
+                        <div class="bold-shape-bg"></div>
+                        <div class="bold-shape-fg">
+                            <h2 class="placeholder-title">SKILLS</h2>
+                            <p class="placeholder-text">
+                                I like photography and programming :D
+                                <iframe
+                                    src="https://github-readme-stats.hackclub.dev/api/wakatime?username=30121&api_domain=hackatime.hackclub.com&theme=shadow_blue&custom_title=Hackatime+Stats&layout=compact&cache_seconds=0&langs_count=8"
+                                    width="600" height="200" frameborder="0" scrolling="no"></iframe>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel: ITEMS -->
+                <div class="submenu-panel" id="panel_item">
+                    <div class="bold-shape-container">
+                        <div class="bold-shape-bg"></div>
+                        <div class="bold-shape-fg">
+                            <h2 class="placeholder-title">ITEMS</h2>
+                            <p class="placeholder-text">Inventory : <br>
+                                • HP PAVILLION dx-15xx (2020) <br>
+                                • Samsung WB30F (2013) <br>
+                                • PS4 Slim (2016) <br>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Panel: ABOUT ME -->
+                <div class="submenu-panel" id="panel_persona">
+                    <div class="bold-shape-container">
+                        <div class="bold-shape-bg"></div>
+                        <div class="bold-shape-fg">
+                            <h2 class="placeholder-title">ABOUT ME</h2>
+                            <p class="placeholder-text">16 yo kid building random stupid stuff on his free time cuz why
+                                not
+                                <br> I like photgraphy and music
+                                <span class="italic">(and persona like obviously)</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- Panel: SOCIAL LINK -->
+                <div class="submenu-panel" id="panel_socialLink">
+                    <div class="bold-shape-container">
+                        <div class="bold-shape-bg"></div>
+                        <div class="bold-shape-fg">
+                            <h2 class="placeholder-title">SOCIAL LINK</h2>
+                            <p class="placeholder-text">I don't use much social apps <span>(im lowkey
+                                    autistic)</span><br>
+                                Hit me up on mybe Discord (dakpol._) or prob <a
+                                    href="https://hackclub.enterprise.slack.com/team/U0AJAB37BUK"
+                                    target="_blank">Slack</a>
+                                (Warelovvvvvv)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel: PROJECTS -->
+                <div class="submenu-panel" id="panel_calendar">
+                    <div class="bold-shape-container">
+                        <div class="bold-shape-bg"></div>
+                        <div class="bold-shape-fg">
+                            <h2 class="placeholder-title">PROJECTS</h2>
+                            <p class="placeholder-text">You can always check my github
+                                <span class="italic">(down below)</span><br>
+                                But most notable ones are : <br>
+                                • <a href="https://github.com/notwewnothing/SpotiFLac/releases/tag/v1.1.0"
+                                    target="_blank">AudioPhile</a>
+                                (it's not maintained tho)<br>
+                                • <a href="https://github.com/notwewnothing/workspace-commander"
+                                    target="_blank">MacroPad</a>
+                                (my project for flavortown)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel: SYSTEM -->
+                <div class="submenu-panel" id="panel_system">
+                    <div class="bold-shape-container">
+                        <div class="bold-shape-bg"></div>
+                        <div class="bold-shape-fg">
+                            <h2 class="placeholder-title">SYSTEM</h2>
+                            <p class="placeholder-text">Idk what to add here<br>anyways enjoy 4 lains dancing<br>
+                                <img src="assets/lain.gif" alt="lain dancing" style="width:100px;height:100px;">
+                                <img src="assets/lain.gif" alt="lain dancing" style="width:100px;height:100px;">
+                                <img src="assets/lain.gif" alt="lain dancing" style="width:100px;height:100px;">
+                                <img src="assets/lain.gif" alt="lain dancing" style="width:100px;height:100px;">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -281,6 +290,7 @@
         </a>
         <span class="footer-text">made with 🩵 by Poldak</span>
     </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>

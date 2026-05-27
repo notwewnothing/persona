@@ -26,12 +26,12 @@ You do not need any special server environments, package managers, or build tool
 1.  **Clone the repository:**
 ```bash
     git clone [https://github.com/notwewnothing/persona.git](https://github.com/notwewnothing/persona.git)
-    ```
+```
 
 2.  **Navigate to the directory:**
 ```bash
     cd persona
-    ```
+```
 
 3.  **Run the project:**
     Simply open the `index.html` file in your preferred web browser to view the interface.
@@ -41,8 +41,16 @@ You do not need any special server environments, package managers, or build tool
 ## Project Structure
 
 ```text
-├── index.html       # Main structure & portfolio content
-├── css/
-│   └── style.css    # Layout, angled designs, and animations
-└── js/
-    └── main.js      # Menu logic, tab switching, and interaction handling
+├── index.html
+├── style.css
+├── script.js
+└── assets/
+    ├── hero_loop.mp4
+    ├── 1.jpg
+    ├── 2.jpg
+    ├── 3.jpg
+    ├── 4.jpg
+    ├── 5.jpg
+    └── background.mp4
+```
+
