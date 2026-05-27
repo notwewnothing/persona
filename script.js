@@ -41,19 +41,33 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // ===== Opening Sequence =====
-    // Play the background video
-    if (bgVideo) bgVideo.play().catch(e => console.log("Video auto-play prevented:", e));
+    window.addEventListener('load', function() {
+        const loader = document.getElementById('loading_screen');
+        if (loader) {
+            loader.classList.add('hidden');
+        }
+        
+        document.body.classList.add('loaded');
 
-    // Stagger in the menu items
-    setTimeout(() => {
-        // We want to stagger them in reverse order (bottom up) like the Godot project
-        const reversedItems = Array.from(menuItems).reverse();
-        reversedItems.forEach((item, index) => {
-            setTimeout(() => {
-                item.classList.add('spawned');
-            }, index * 60); // 60ms stagger delay
-        });
-    }, 100); // Start shortly after load
+        // Play the background video
+        if (bgVideo) bgVideo.play().catch(e => console.log("Video auto-play prevented:", e));
+
+        // Stagger in the menu items
+        setTimeout(() => {
+            // We want to stagger them in reverse order (bottom up) like the Godot project
+            const reversedItems = Array.from(menuItems).reverse();
+            reversedItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('spawned');
+                }, index * 60); // 60ms stagger delay
+            });
+        }, 100); // Start shortly after load
+
+        // Initialize first selection after a brief delay
+        setTimeout(() => {
+            selectItem(0);
+        }, 1100);
+    });
 
     // Idle animation removed per user request
 
@@ -118,10 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
         itemSpan.focus();
     }
 
-    // Initialize first selection after a brief delay
-    setTimeout(() => {
-        selectItem(0);
-    }, 1100);
+    // Initial selection is now handled in the load event listener above
 
     // ===== Submenu Transitions =====
     function openSubmenu() {
