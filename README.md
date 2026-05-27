@@ -3,6 +3,8 @@
 A web-based replica of the pause menu from *Persona 3 Reload*, built entirely with plain HTML, CSS, and JavaScript. 
 
 I built this project because I wanted a unique interactive portfolio to display my work and, simply put, because why not. My primary goal was to make the layout and functionality as faithful to the original game's interface as I possibly could within the constraints of a web browser. 
+ 
+## You can try it [HERE](https://notwewnothing.github.io/persona)
 
 ### Note on Mobile Support
 I should mention that this website does not work on mobile devices and will never do so. It is nearly impossible to achieve a similar looking effect on a mobile aspect ratio while maintaining the specific layout and scale of the original menu. This project is built specifically as a novelty desktop experience and a technical exercise, rather than a standard responsive personal website.

@@ -40,33 +40,71 @@ document.addEventListener("DOMContentLoaded", function () {
         m_system: { transform: 'scale(130%) rotate(8deg) translate(32px, 0px)', prefix: 'system', panelId: 'panel_system' },
     };
 
+    // ===== Asset Preloader =====
+    function waitForVideo(video) {
+        return new Promise((resolve) => {
+            if (!video) { resolve(); return; }
+            // If the video already has enough data, resolve immediately
+            if (video.readyState >= 4) { resolve(); return; }
+            video.addEventListener('canplaythrough', () => resolve(), { once: true });
+            // Start loading if not already
+            video.load();
+        });
+    }
+
+    function waitForImage(img) {
+        return new Promise((resolve) => {
+            if (img.complete && img.naturalWidth > 0) { resolve(); return; }
+            img.addEventListener('load', () => resolve(), { once: true });
+            img.addEventListener('error', () => resolve(), { once: true });
+        });
+    }
+
+    function preloadAllAssets() {
+        const promises = [];
+
+        // Wait for both videos
+        promises.push(waitForVideo(bgVideo));
+        promises.push(waitForVideo(submenuVideo));
+
+        // Wait for all images in the document (including SVGs and GIFs)
+        const allImages = document.querySelectorAll('img');
+        allImages.forEach(img => promises.push(waitForImage(img)));
+
+        // Wait for fonts
+        if (document.fonts && document.fonts.ready) {
+            promises.push(document.fonts.ready);
+        }
+
+        return Promise.all(promises);
+    }
+
     // ===== Opening Sequence =====
-    window.addEventListener('load', function() {
+    preloadAllAssets().then(() => {
         const loader = document.getElementById('loading_screen');
         if (loader) {
             loader.classList.add('hidden');
         }
-        
+
         document.body.classList.add('loaded');
 
         // Play the background video
         if (bgVideo) bgVideo.play().catch(e => console.log("Video auto-play prevented:", e));
 
-        // Stagger in the menu items
+        // Stagger in the menu items (bottom to top pop)
         setTimeout(() => {
-            // We want to stagger them in reverse order (bottom up) like the Godot project
             const reversedItems = Array.from(menuItems).reverse();
             reversedItems.forEach((item, index) => {
                 setTimeout(() => {
                     item.classList.add('spawned');
-                }, index * 60); // 60ms stagger delay
+                }, index * 100); // 100ms stagger for a more visible pop effect
             });
-        }, 100); // Start shortly after load
+        }, 100);
 
-        // Initialize first selection after a brief delay
+        // Initialize first selection after items have popped in
         setTimeout(() => {
             selectItem(0);
-        }, 1100);
+        }, 1200);
     });
 
     // Idle animation removed per user request
