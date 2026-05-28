@@ -1,3 +1,9 @@
+const SMALL_SCREEN_MQ = window.matchMedia("(max-width: 1200px)");
+
+function isDesktopViewport() {
+    return !SMALL_SCREEN_MQ.matches;
+}
+
 document.addEventListener("keydown", function (event) {
     if (event.key === "Tab") {
         event.preventDefault();
@@ -81,32 +87,82 @@ document.addEventListener("DOMContentLoaded", function () {
         return Promise.all(promises);
     }
 
-    preloadAllAssets().then(() => {
+    let desktopExperienceStarted = false;
+
+    function hideLoadingScreen() {
         const loader = document.getElementById('loading_screen');
         if (loader) {
             loader.classList.add('hidden');
         }
+    }
 
-        document.body.classList.add('loaded');
+    function applyDesktopReadyState(animateMenu) {
+        hideLoadingScreen();
 
-        // Play the background video
-        if (bgVideo) bgVideo.play().catch(e => console.log("Video auto-play prevented:", e));
+        document.body.classList.add('loaded', 'desktop-ready');
 
-        // Stagger in the menu items (bottom to top pop)
-        setTimeout(() => {
-            const reversedItems = Array.from(menuItems).reverse();
-            reversedItems.forEach((item, index) => {
-                setTimeout(() => {
-                    item.classList.add('spawned');
-                }, index * 100); // 100ms stagger for a more visible pop effect
-            });
-        }, 100);
+        menuItems.forEach((item) => item.classList.remove('spawned'));
+        void document.body.offsetWidth;
 
-        // Initialize first selection after items have popped in
-        setTimeout(() => {
+        if (animateMenu) {
+            setTimeout(() => {
+                const reversedItems = Array.from(menuItems).reverse();
+                reversedItems.forEach((item, index) => {
+                    setTimeout(() => item.classList.add('spawned'), index * 100);
+                });
+            }, 100);
+            setTimeout(() => selectItem(0), 1200);
+        } else {
+            menuItems.forEach((item) => item.classList.add('spawned'));
             selectItem(0);
-        }, 1200);
-    });
+        }
+
+        if (bgVideo) {
+            bgVideo.play().catch(() => {});
+        }
+
+        window.dispatchEvent(new Event('resize'));
+    }
+
+    function deactivateForSmallScreen() {
+        document.body.classList.remove('loaded', 'desktop-ready');
+        document.querySelectorAll('video, audio').forEach((media) => media.pause());
+
+        if (isSubmenuOpen) {
+            closeSubmenu();
+        }
+        if (isMusicPlayerOpen) {
+            closeMusicPlayer();
+        }
+    }
+
+    function activateDesktopExperience(animateMenu) {
+        if (!isDesktopViewport()) return;
+
+        if (desktopExperienceStarted) {
+            applyDesktopReadyState(animateMenu);
+            return;
+        }
+
+        desktopExperienceStarted = true;
+        preloadAllAssets().then(() => applyDesktopReadyState(animateMenu));
+    }
+
+    function handleViewportChange() {
+        if (SMALL_SCREEN_MQ.matches) {
+            deactivateForSmallScreen();
+        } else {
+            activateDesktopExperience(false);
+        }
+    }
+
+    SMALL_SCREEN_MQ.addEventListener('change', handleViewportChange);
+
+    if (isDesktopViewport()) {
+        activateDesktopExperience(true);
+    } else {
+        preloadAllAssets().then(hideLoadingScreen);
+    }
 
     // Idle animation removed per user request
 
@@ -516,7 +572,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Helper functions for About Me photos
+
     const predefinedPositions = [
         { left: '2vw', top: '5vh', rot: -8 },
         { left: '18vw', top: '22vh', rot: 12 },
@@ -533,7 +589,7 @@ document.addEventListener("DOMContentLoaded", function () {
             photo.classList.remove('show');
         });
 
-        // Determine random number between 3 and 5
+
         const numToShow = 5;
 
         // Shuffle photos and positions

@@ -532,13 +532,13 @@ body.loaded .container {
     font-size: 37vh;
     transform: rotate(90deg);
     letter-spacing: -0.2em;
-    color: rgba(255, 255, 255, 0.08);
+    color: #16CFFB;
     font-family: var(--menu-font);
     font-weight: 900;
     font-style: italic;
     z-index: 0;
     pointer-events: none;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s ease;
     text-shadow: 0 0 80px rgba(0, 150, 255, 0.15);
 }
@@ -1396,5 +1396,93 @@ canvas.snow {
 
     to {
         transform: translate3d(0, -50%, 0);
+    }
+}
+
+
+body.desktop-ready .herovideo,
+body.desktop-ready .container,
+body.desktop-ready .side-index,
+body.desktop-ready .bottom-bar,
+body.desktop-ready .site-footer,
+body.desktop-ready .music-toggle {
+    opacity: 1;
+}
+
+body.desktop-ready .text.spawned {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.small-screen-notice {
+    display: none;
+}
+
+.small-screen-shape.bold-shape-container {
+    width: min(92vw, 420px);
+    height: auto;
+    min-height: 200px;
+}
+
+.small-screen-shape .bold-shape-bg {
+    transform: translate(10px, 10px);
+}
+
+.small-screen-shape .bold-shape-fg {
+    position: relative;
+    padding: 36px 32px;
+}
+
+.small-screen-notice-title {
+    margin: 0 0 12px;
+    font-family: var(--menu-font);
+    font-size: clamp(28px, 8vw, 40px);
+    font-weight: 900;
+    font-style: italic;
+    color: var(--red);
+    letter-spacing: -0.05em;
+    transform: rotate(-4deg);
+}
+
+.small-screen-notice-text {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: clamp(16px, 4.5vw, 20px);
+    font-weight: bold;
+    color: #333;
+    line-height: 1.45;
+    transform: rotate(-4deg);
+}
+
+@media (max-width: 1200px) {
+    body {
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        min-height: 100dvh;
+
+    }
+
+    #screen,
+    fh .side-index,
+    .music-toggle,
+    .footer-text,
+    .bottom-bar,
+    .music-player {
+        display: none !important;
+    }
+
+
+    .small-screen-notice {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        inset: 0;
+        z-index: 20000;
+        padding: 24px;
+        box-sizing: border-box;
     }
 }
