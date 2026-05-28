@@ -9,11 +9,6 @@ I built this project because I wanted a unique interactive portfolio to display 
 ### Note on Mobile Support
 I should mention that this website does not work on mobile devices and will never do so. It is nearly impossible to achieve a similar looking effect on a mobile aspect ratio while maintaining the specific layout and scale of the original menu. This project is built specifically as a novelty desktop experience and a technical exercise, rather than a standard responsive personal website.
 
-### Technical Implementation
-To replicate the specific geometric shapes and layout of the game without relying on external libraries, frameworks, or engines, the project utilizes several core web technologies:
-*   **CSS Layouts:** Extensive use of CSS Grid and Flexbox to manage the placement of UI elements on the screen.
-*   **Transformations:** Usage of CSS properties such as `transform: skew()`, `rotate()`, and `clip-path` to construct the angled menus, text boxes, and background elements.
-*   **Vanilla JavaScript:** Lightweight DOM manipulation is used to handle tab switching, keyboard/mouse interactions, and updating the current active state of the menu panels.
 
 If you have any recommendations, code optimizations, or ideas, feel free to contact me or open an issue on the repository.
 
@@ -25,7 +20,7 @@ You do not need any special server environments, package managers, or build tool
 
 1.  **Clone the repository:**
 ```bash
-    git clone [https://github.com/notwewnothing/persona.git](https://github.com/notwewnothing/persona.git)
+    git clone https://github.com/notwewnothing/persona.git
 ```
 
 2.  **Navigate to the directory:**
@@ -53,4 +48,3 @@ You do not need any special server environments, package managers, or build tool
     ├── 5.jpg
     └── background.mp4
 ```
-

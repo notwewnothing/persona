@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wdth,wght@1,6..12,75,900&display=swap');
 
-/* ===== CSS Variables ===== */
+
 :root {
     --cyan-1: #16CFFB;
     --cyan-2: #7DE6FD;
@@ -18,7 +18,7 @@
 
 
 
-/* ===== Background Video ===== */
+
 .herovideo {
     position: fixed;
     top: 50%;
@@ -47,7 +47,7 @@ body.loaded .herovideo {
     }
 }
 
-/* ===== Body ===== */
+
 body {
 
     font-family: var(--menu-font);
@@ -77,12 +77,11 @@ body {
     user-select: none;
 }
 
-/* ===== Menu Container ===== */
 .container {
     width: 150px;
     height: 200px;
     cursor: pointer;
-    /* Offset: left 50px, down 80px + scale up 1.4x */
+
     transform: translate(-190px, 130px) scale(3.3);
 
     opacity: 0;
@@ -103,7 +102,7 @@ body.loaded .container {
     }
 }
 
-/* ===== Menu Items — Stagger Spawn ===== */
+
 .text {
 
     width: 100%;
@@ -145,7 +144,7 @@ body.loaded .container {
 
 }
 
-/* ===== Menu Item Base Styles ===== */
+
 #m_skill,
 #m_item,
 #m_equip,
@@ -208,7 +207,7 @@ body.loaded .container {
     z-index: -1;
 }
 
-/* ===== Focus States ===== */
+
 #m_skill:focus,
 #m_item:focus,
 #m_equip:focus,
@@ -223,7 +222,7 @@ body.loaded .container {
     z-index: 1;
 }
 
-/* ===== Triangle / Decoration Elements ===== */
+
 .text div {
     position: absolute;
     pointer-events: none;
@@ -525,7 +524,7 @@ body.loaded .container {
     z-index: 1;
 }
 
-/* ===== Side Index Number ===== */
+
 .side-index {
     position: fixed;
     left: -4.5rem;
@@ -562,7 +561,7 @@ body.loaded .side-index {
     }
 }
 
-/* ===== Bottom Command Bar ===== */
+
 .bottom-bar {
     position: fixed;
     bottom: 0;
@@ -670,7 +669,7 @@ body.loaded .bottom-bar {
         -2px 0 0 var(--border-color);
 }
 
-/* ===== Footer ===== */
+
 .site-footer {
     position: fixed;
     bottom: 30px;
@@ -725,7 +724,7 @@ body.loaded .site-footer {
     transition: opacity 0.2s ease;
 }
 
-/* ===== Submenu Overlay ===== */
+
 .submenu-overlay {
     position: fixed;
     inset: 0;
@@ -740,7 +739,7 @@ body.loaded .site-footer {
     z-index: 55;
 }
 
-/* Circular reveal mask layer */
+
 .submenu-reveal {
     position: fixed;
 
@@ -763,7 +762,7 @@ body.loaded .site-footer {
     transition: clip-path 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Second circle (offset, like the Godot double_circular_cut_mask) */
+
 .submenu-reveal-2 {
     position: fixed;
     inset: 0;
@@ -786,7 +785,7 @@ body.loaded .site-footer {
     transition: clip-path 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ===== Submenu Panels ===== */
+
 .submenu-video {
     position: fixed;
     top: 50%;
@@ -799,9 +798,9 @@ body.loaded .site-footer {
     transform: translate(-50%, -50%);
     object-fit: cover;
     z-index: 47;
-    /* Behind reveals */
+
     opacity: 0;
-    /* Hidden until reveal */
+
     filter: brightness(0.4) saturate(1.2) hue-rotate(-10deg);
 }
 
@@ -849,7 +848,7 @@ body.loaded .site-footer {
     transform: translateY(-10px);
 }
 
-/* Bold shaped container inside submenu panels */
+
 .bold-shape-container {
     position: relative;
     width: 600px;
@@ -895,7 +894,7 @@ body.loaded .site-footer {
     transform: rotate(-5deg);
 }
 
-/* Global Submenu Back/Exit Button */
+
 .submenu-back {
     position: fixed;
     top: 40px;
@@ -927,7 +926,145 @@ body.loaded .site-footer {
     text-shadow: 0 0 10px rgba(125, 230, 253, 0.6);
 }
 
-/* ===== About Me Photos (Random Spawn) ===== */
+
+.music-toggle {
+    position: fixed;
+    top: 36px;
+    right: 36px;
+    z-index: 10001;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: rgba(0, 20, 70, 0.55);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(8% 0%, 100% 12%, 92% 100%, 0% 88%);
+    opacity: 0;
+    transform: translateY(-12px);
+    transition: opacity 0.3s ease, transform 0.3s ease, color 0.2s ease, background 0.2s ease;
+    pointer-events: none;
+}
+
+
+body.loaded .music-toggle {
+    animation: musicToggleFadeIn 0.4s ease-out 1.4s forwards;
+    pointer-events: auto;
+}
+
+@keyframes musicToggleFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.music-toggle:hover,
+.music-toggle[aria-expanded="true"] {
+    color: var(--cyan-2);
+    background: rgba(0, 40, 110, 0.75);
+    box-shadow: 0 0 12px rgba(125, 230, 253, 0.35);
+}
+
+.music-toggle.is-playing svg {
+    filter: drop-shadow(0 0 6px rgba(125, 230, 253, 0.8));
+}
+
+.music-player {
+    position: fixed;
+    top: 88px;
+    right: 24px;
+    z-index: 10002;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px) scale(0.96);
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.music-player.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+.music-shape.bold-shape-container {
+    width: 300px;
+    height: 168px;
+}
+
+.music-shape .bold-shape-bg {
+    transform: translate(8px, 8px);
+}
+
+.music-shape .bold-shape-fg {
+    padding: 22px 28px 20px;
+    justify-content: flex-start;
+}
+
+.music-player-inner {
+    gap: 6px;
+}
+
+.music-player-heading {
+    margin: 0;
+    font-family: var(--menu-font);
+    font-size: 22px;
+    font-weight: 900;
+    font-style: italic;
+    color: var(--red);
+    letter-spacing: -0.04em;
+    transform: rotate(-4deg);
+}
+
+.music-track-name {
+    margin: 0 0 8px;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    line-height: 1.3;
+    transform: rotate(-4deg);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.music-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    transform: rotate(-4deg);
+}
+
+.music-control-btn {
+    font-family: var(--menu-font);
+    font-weight: 900;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--red);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.music-control-btn:hover {
+    color: var(--bg-blue);
+    transform: scale(1.08);
+}
+
+.music-control-btn--primary {
+    font-size: 22px;
+    padding: 2px 12px;
+}
+
+
 .photos-wrapper {
     position: fixed;
     top: 0;
@@ -988,7 +1125,6 @@ body.loaded .site-footer {
     clip-path: polygon(4.5% 10%, 98% 9.5%, 93.5% 98%, 1.5% 91%);
 }
 
-/* ===== Loading Screen ===== */
 .loading-screen {
     position: fixed;
     inset: 0;
@@ -1044,7 +1180,7 @@ body.loaded .site-footer {
     }
 }
 
-/* ===== CRT Effect ===== */
+/*  crt screen*/
 .screen-container {
     width: 100vw;
     height: 100vh;

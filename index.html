@@ -19,7 +19,7 @@
 <body>
 
     <div id="screen">
-        <!-- Loading Screen -->
+
         <div id="loading_screen" class="loading-screen">
             <div class="loader"></div>
             <div class="loading-text">LOADING...</div>
@@ -34,6 +34,33 @@
         <div class="side-index" id="side_index">
             <span class="z-1">01</span>
         </div>
+
+
+        <button type="button" class="music-toggle" id="music_toggle" aria-label="Open music player"
+            aria-expanded="false" aria-controls="music_player">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"
+                aria-hidden="true">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+            </svg>
+        </button>
+        <div class="music-player" id="music_player" aria-hidden="true">
+            <div class="bold-shape-container music-shape">
+                <div class="bold-shape-bg"></div>
+                <div class="bold-shape-fg music-player-inner">
+                    <h2 class="music-player-heading">NOW PLAYING</h2>
+                    <p class="music-track-name" id="music_track_name">—</p>
+                    <div class="music-controls">
+                        <button type="button" class="music-control-btn" id="music_prev"
+                            aria-label="Previous track">◀◀</button>
+                        <button type="button" class="music-control-btn music-control-btn--primary" id="music_play_pause"
+                            aria-label="Play">▶</button>
+                        <button type="button" class="music-control-btn" id="music_next"
+                            aria-label="Next track">▶▶</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <audio id="music_audio" preload="metadata"></audio>
 
         <!-- About Me Photos -->
         <div id="about_me_photos" class="photos-wrapper">
@@ -69,7 +96,7 @@
             </div>
         </div>
 
-        <!-- Menu Container -->
+
         <div class="container" id="menu_container">
             <div class="text" data-index="1" data-desc="Use a Skill">
                 <span id="m_skill" tabindex="0">SKILLS</span>
@@ -130,7 +157,7 @@
             </div>
         </div>
 
-        <!-- Bottom Command Bar -->
+
         <div class="bottom-bar" id="bottom_bar">
             <div class="description" id="cmd_desc">Use a Skill</div>
             <div class="divider">
@@ -147,18 +174,16 @@
             </div>
         </div>
 
-        <!-- Submenu Transition Layers -->
+
         <div class="submenu-overlay" id="submenu_overlay">
-            <!-- Submenu Background Video -->
+
             <video class="submenu-video" id="submenu_video" oncontextmenu="return false" playsinline loop muted>
                 <source src="assets/background.mp4" type="video/mp4">
             </video>
 
-            <!-- Mask layers for the circular reveal transition -->
             <div class="submenu-reveal-2" id="reveal_2"></div>
             <div class="submenu-reveal" id="reveal_1"></div>
 
-            <!-- Global Submenu Back Button -->
             <div class="submenu-back" id="submenu_back_btn">
                 <span class="control-key">ESC</span>
             </div>

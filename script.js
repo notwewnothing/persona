@@ -23,9 +23,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const submenuBackBtn = document.getElementById('submenu_back_btn');
     const submenuVideo = document.getElementById('submenu_video');
     const panels = document.querySelectorAll('.submenu-panel');
+    const music = document.getElementById('music-toggle');
 
     let isSubmenuOpen = false;
     let currentPanel = null;
+
 
     // Per-item highlight transforms (keyed by element id)
     const highlightData = {
@@ -40,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
         m_system: { transform: 'scale(130%) rotate(8deg) translate(32px, 0px)', prefix: 'system', panelId: 'panel_system' },
     };
 
-    // ===== Asset Preloader =====
+
     function waitForVideo(video) {
         return new Promise((resolve) => {
             if (!video) { resolve(); return; }
@@ -79,7 +81,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return Promise.all(promises);
     }
 
-    // ===== Opening Sequence =====
     preloadAllAssets().then(() => {
         const loader = document.getElementById('loading_screen');
         if (loader) {
@@ -109,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Idle animation removed per user request
 
-    // ===== Selection Logic =====
+
     function selectItem(index, force = false) {
         if (isSubmenuOpen && !force) return;
 
@@ -172,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initial selection is now handled in the load event listener above
 
-    // ===== Submenu Transitions =====
+
     function openSubmenu() {
         if (isSubmenuOpen) return;
         isSubmenuOpen = true;
@@ -226,9 +227,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     submenuVideo.classList.add('visible');
 
                 }
-                setTimeout(() => {
-                    submenuBackBtn.classList.add('visible');
-                }, 400);
+                if (music)
+                    setTimeout(() => {
+                        submenuBackBtn.classList.add('visible');
+                    }, 400);
             });
         });
     }
@@ -238,7 +240,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const panelToHide = currentPanel;
 
-        // Hide panel content immediately
+
         if (panelToHide) {
             panelToHide.classList.remove('visible');
             panelToHide.classList.add('hiding');
@@ -279,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 500);
     }
 
-    // ===== Event Listeners =====
+
 
     // Keyboard navigation
     document.addEventListener("keydown", function (event) {
@@ -383,6 +385,137 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+
+    const PLAYLIST = [
+        { src: "assets/When The Moon's Reaching Out Stars -Reload-.mp3", title: "When The Moon's Reaching Out Stars" },
+        { src: "assets/Color Your Night.mp3", title: "Color Your Night" },
+        { src: "assets/巌戸台分寮 -Reload-.mp3", title: "巌戸台分寮" },
+    ];
+
+    const musicToggle = document.getElementById('music_toggle');
+    const musicPlayer = document.getElementById('music_player');
+    const musicAudio = document.getElementById('music_audio');
+    const musicTrackName = document.getElementById('music_track_name');
+    const musicPlayPause = document.getElementById('music_play_pause');
+    const musicPrev = document.getElementById('music_prev');
+    const musicNext = document.getElementById('music_next');
+
+    let musicTrackIndex = 0;
+    let isMusicPlayerOpen = false;
+
+    function updateMusicTrackLabel() {
+        if (musicTrackName) {
+            musicTrackName.textContent = PLAYLIST[musicTrackIndex].title;
+        }
+    }
+
+    function updatePlayPauseButton() {
+        if (!musicPlayPause || !musicAudio) return;
+        const playing = !musicAudio.paused;
+        musicPlayPause.textContent = playing ? '❚❚' : '▶';
+        musicPlayPause.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+        if (musicToggle) {
+            musicToggle.classList.toggle('is-playing', playing);
+        }
+    }
+
+    function loadMusicTrack(index, autoplay) {
+        if (!musicAudio || !PLAYLIST.length) return;
+        musicTrackIndex = (index + PLAYLIST.length) % PLAYLIST.length;
+        const track = PLAYLIST[musicTrackIndex];
+        musicAudio.src = track.src;
+        updateMusicTrackLabel();
+        if (autoplay) {
+            musicAudio.play().catch(() => updatePlayPauseButton());
+        }
+        updatePlayPauseButton();
+    }
+
+    function openMusicPlayer() {
+        if (!musicPlayer || !musicToggle) return;
+        isMusicPlayerOpen = true;
+        musicPlayer.classList.add('open');
+        musicPlayer.setAttribute('aria-hidden', 'false');
+        musicToggle.setAttribute('aria-expanded', 'true');
+
+
+
+        updatePlayPauseButton();
+    }
+
+    function closeMusicPlayer() {
+        if (!musicPlayer || !musicToggle) return;
+        isMusicPlayerOpen = false;
+        musicPlayer.classList.remove('open');
+        musicPlayer.setAttribute('aria-hidden', 'true');
+        musicToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    function toggleMusicPlayer() {
+        if (isMusicPlayerOpen) {
+            closeMusicPlayer();
+        } else {
+            openMusicPlayer();
+        }
+    }
+
+    function toggleMusicPlayback() {
+        if (!musicAudio) return;
+        if (!musicAudio.src) {
+            loadMusicTrack(0, true);
+            return;
+        }
+        if (musicAudio.paused) {
+            musicAudio.play().catch(() => updatePlayPauseButton());
+        } else {
+            musicAudio.pause();
+        }
+        updatePlayPauseButton();
+    }
+
+    if (musicToggle) {
+        musicToggle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            toggleMusicPlayer();
+        });
+    }
+
+    if (musicPlayPause) {
+        musicPlayPause.addEventListener('click', function (e) {
+            e.stopPropagation();
+            toggleMusicPlayback();
+        });
+    }
+
+    if (musicPrev) {
+        musicPrev.addEventListener('click', function (e) {
+            e.stopPropagation();
+            loadMusicTrack(musicTrackIndex - 1, true);
+        });
+    }
+
+    if (musicNext) {
+        musicNext.addEventListener('click', function (e) {
+            e.stopPropagation();
+            loadMusicTrack(musicTrackIndex + 1, true);
+        });
+    }
+
+    if (musicAudio) {
+        musicAudio.addEventListener('ended', function () {
+            loadMusicTrack(musicTrackIndex + 1, true);
+        });
+        musicAudio.addEventListener('play', updatePlayPauseButton);
+        musicAudio.addEventListener('pause', updatePlayPauseButton);
+    }
+
+    document.addEventListener('click', function (event) {
+        if (!isMusicPlayerOpen) return;
+        if (!event.target.closest('#music_player') && !event.target.closest('#music_toggle')) {
+            closeMusicPlayer();
+        }
+    });
+
     // Helper functions for About Me photos
     const predefinedPositions = [
         { left: '2vw', top: '5vh', rot: -8 },
@@ -431,302 +564,302 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// ===== CRT Effect =====
+// crt i guess
 function getRandomInt(min, max) {
-	min = Math.ceil(min);
-	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min + 1)) + min;
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 class ScreenEffect {
-	constructor(parent, options) {
-		this.parent = parent;
-		if ( typeof parent === "string" ) {
-			this.parent = document.querySelector(parent);
-		}
-		
-		this.config = Object.assign({}, {}, options)
-		this.effects = {};
-		this.events = {
-			resize: this.onResize.bind(this)
-		};
-		
-		window.addEventListener("resize", this.events.resize, false);
-		this.render();
-	}
-	
-	render() {
-		const container = document.createElement("div");
-		container.classList.add("screen-container");
-		
-		const wrapper1 = document.createElement("div");
-		wrapper1.classList.add("screen-wrapper");
-		
-		const wrapper2 = document.createElement("div");
-		wrapper2.classList.add("screen-wrapper");	
-		
-		const wrapper3 = document.createElement("div");
-		wrapper3.classList.add("screen-wrapper");			
-		
-		wrapper1.appendChild(wrapper2);
-		wrapper2.appendChild(wrapper3);
-		
-		container.appendChild(wrapper1);
-		
-		this.parent.parentNode.insertBefore(container, this.parent);
-		wrapper3.appendChild(this.parent);
-		
-		this.nodes = { container, wrapper1, wrapper2, wrapper3 };
-		this.onResize();
-	}
-	
-	onResize(e) {
-		this.rect = this.parent.getBoundingClientRect();
-		if ( this.effects.vcr && !!this.effects.vcr.enabled ) {
-			this.generateVCRNoise();
-		}
-	}
-	
-	add(type, options) {
-		const config = Object.assign({}, {
-			fps: 30,
-			blur: 1
-		}, options);
-		
-		if ( Array.isArray(type) ) {
-			for ( const t of type ) {
-				this.add(t);
-			}
-			return this;
-		}
-		
-		const that = this;
-		
-		if ( type === "snow" ) {
-			const canvas = document.createElement("canvas");
-			const ctx = canvas.getContext("2d");
-			canvas.classList.add(type);
-			canvas.width = this.rect.width / 2;
-			canvas.height = this.rect.height / 2;
-			
-			this.nodes.wrapper2.appendChild(canvas);
-			
-			animate();
-			
-			function animate() {
-				that.generateSnow(ctx);
-				that.snowframe = requestAnimationFrame(animate);
-			}
-			
-			this.effects[type] = {
-				wrapper: this.nodes.wrapper2,
-				node: canvas,
-				enabled: true,
-				config
-			};
-			return this;
-		}
-		
-		if ( type === "roll" ) {
-			return this.enableRoll();
-		}
-		
-		if ( type === "vcr" ) {
-			const canvas = document.createElement("canvas");
-			canvas.classList.add(type);
-			this.nodes.wrapper2.appendChild(canvas);
-			
-			canvas.width = this.rect.width;
-			canvas.height = this.rect.height;
-			
-			this.effects[type] = {
-				wrapper: this.nodes.wrapper2,
-				node: canvas,
-				ctx: canvas.getContext("2d"),
-				enabled: true,
-				config
-			};			
-			
-			this.generateVCRNoise();
-			return this;
-		}
-		
-		let node = false;
-		let wrapper = this.nodes.wrapper2;
-		
-		switch(type) {
-			case "wobblex":
-			case "wobbley":
-				wrapper.classList.add(type);
-				break;
-			case "scanlines":
-				node = document.createElement("div");
-				node.classList.add(type);
-				wrapper.appendChild(node);
-				break;
-			case "vignette":
-				wrapper = this.nodes.container;
-				node = document.createElement("div");
-				node.classList.add(type);
-				wrapper.appendChild(node);
-				break;
-			case "image":
-				wrapper = this.parent;
-				node = document.createElement('img');
-				node.classList.add(type);
-				node.src = config.src;
-				wrapper.appendChild(node);
-				break;				
-			case "video":
-				wrapper = this.parent;
-				node = document.createElement('video');
-				node.classList.add(type);
-				node.src = config.src;
-				node.crossOrigin = 'anonymous';
-				node.autoplay = true;
-				node.muted = true;
-				node.loop = true;
-				wrapper.appendChild(node);
-				break;
-		}
+    constructor(parent, options) {
+        this.parent = parent;
+        if (typeof parent === "string") {
+            this.parent = document.querySelector(parent);
+        }
 
-		this.effects[type] = {
-			wrapper,
-			node,
-			enabled: true,
-			config
-		};
-		return this;
-	}
-	
-	remove(type) {
-		const obj = this.effects[type];
-		if ( type in this.effects && !!obj.enabled ) {
-			obj.enabled = false;
-			
-			if ( type === "roll" && obj.original ) {
-				this.parent.appendChild(obj.original);
-			}			
-			
-			if ( type === "vcr" ) {
-				clearInterval(this.vcrInterval);
-			}
-			
-			if ( type === "snow" ) {
-				cancelAnimationFrame(this.snowframe);
-			}			
-			
-			if ( obj.node ) {
-				obj.wrapper.removeChild(obj.node);
-			} else {
-				obj.wrapper.classList.remove(type);
-			}
-		}
-		return this;
-	}
-	
-	enableRoll() {
-		const el = this.parent.firstElementChild;
-		if ( el ) {
-			const div = document.createElement("div");
-			div.classList.add("roller");
-			this.parent.appendChild(div);
-			div.appendChild(el);
-			div.appendChild(el.cloneNode(true));
-			
-			this.effects.roll = {
-				enabled: true,
-				wrapper: this.parent,
-				node: div,
-				original: el
-			};
-		}
-	}
-	
-	generateVCRNoise() {
-		const canvas = this.effects.vcr.node;
-		const config = this.effects.vcr.config;
-		const div = this.effects.vcr.node;
-		
-		if ( config.fps >= 60 ) {
-			cancelAnimationFrame(this.vcrInterval);
-			const animate = () => {
-				this.renderTrackingNoise();
-				this.vcrInterval = requestAnimationFrame(animate);
-			};
-			animate();
-		} else {
-			clearInterval(this.vcrInterval);
-			this.vcrInterval = setInterval(() => {
-				this.renderTrackingNoise();
-			}, 1000 / config.fps);
-		}
-	}
-	
-	generateSnow(ctx) {
-		var w = ctx.canvas.width,
-			h = ctx.canvas.height,
-			d = ctx.createImageData(w, h),
-			b = new Uint32Array(d.data.buffer),
-			len = b.length;
+        this.config = Object.assign({}, {}, options)
+        this.effects = {};
+        this.events = {
+            resize: this.onResize.bind(this)
+        };
 
-		for (var i = 0; i < len; i++) {
-			b[i] = ((255 * Math.random()) | 0) << 24;
-		}
+        window.addEventListener("resize", this.events.resize, false);
+        this.render();
+    }
 
-		ctx.putImageData(d, 0, 0);
-	}
-	
-	renderTrackingNoise(radius = 2, xmax, ymax) {
-		const canvas = this.effects.vcr.node;
-		const ctx = this.effects.vcr.ctx;
-		const config = this.effects.vcr.config;
-		let posy1 = config.miny || 0;
-		let posy2 = config.maxy || canvas.height;
-		let posy3 = config.miny2 || 0;
-		const num = config.num || 20;
-		
-		if ( xmax === undefined ) {
-			xmax = canvas.width;
-		}
-		if ( ymax === undefined ) {
-			ymax = canvas.height;
-		}			
-		
-		canvas.style.filter = `blur(${config.blur}px)`;
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		ctx.fillStyle = `#fff`;
+    render() {
+        const container = document.createElement("div");
+        container.classList.add("screen-container");
 
-		ctx.beginPath();
-		for (var i = 0; i <= num; i++) {
-			var x = Math.random(i) * xmax;
-			var y1 = getRandomInt(posy1+=3, posy2);
-			var y2 = getRandomInt(0, posy3-=3);
-			ctx.fillRect(x, y1, radius, radius);
-			ctx.fillRect(x, y2, radius, radius);
-			ctx.fill();
+        const wrapper1 = document.createElement("div");
+        wrapper1.classList.add("screen-wrapper");
 
-			this.renderTail(ctx, x, y1, radius);
-			this.renderTail(ctx, x, y2, radius);
-		}
-		ctx.closePath();
-	}
+        const wrapper2 = document.createElement("div");
+        wrapper2.classList.add("screen-wrapper");
 
-	renderTail(ctx, x, y, radius) {
-		const n = getRandomInt(1, 50);
-		const dirs = [1, -1];
-		let rd = radius;
-		const dir = dirs[Math.floor(Math.random() * dirs.length)];
-		for (let i = 0; i < n; i++) {
-			const step = 0.01;
-			let r = getRandomInt((rd -= step), radius);
-			let dx = getRandomInt(1, 4);
-			radius -= 0.1;
-			dx *= dir;
-			ctx.fillRect((x += dx), y, r, r);
-			ctx.fill();
-		}
-	}	
+        const wrapper3 = document.createElement("div");
+        wrapper3.classList.add("screen-wrapper");
+
+        wrapper1.appendChild(wrapper2);
+        wrapper2.appendChild(wrapper3);
+
+        container.appendChild(wrapper1);
+
+        this.parent.parentNode.insertBefore(container, this.parent);
+        wrapper3.appendChild(this.parent);
+
+        this.nodes = { container, wrapper1, wrapper2, wrapper3 };
+        this.onResize();
+    }
+
+    onResize(e) {
+        this.rect = this.parent.getBoundingClientRect();
+        if (this.effects.vcr && !!this.effects.vcr.enabled) {
+            this.generateVCRNoise();
+        }
+    }
+
+    add(type, options) {
+        const config = Object.assign({}, {
+            fps: 30,
+            blur: 1
+        }, options);
+
+        if (Array.isArray(type)) {
+            for (const t of type) {
+                this.add(t);
+            }
+            return this;
+        }
+
+        const that = this;
+
+        if (type === "snow") {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.classList.add(type);
+            canvas.width = this.rect.width / 2;
+            canvas.height = this.rect.height / 2;
+
+            this.nodes.wrapper2.appendChild(canvas);
+
+            animate();
+
+            function animate() {
+                that.generateSnow(ctx);
+                that.snowframe = requestAnimationFrame(animate);
+            }
+
+            this.effects[type] = {
+                wrapper: this.nodes.wrapper2,
+                node: canvas,
+                enabled: true,
+                config
+            };
+            return this;
+        }
+
+        if (type === "roll") {
+            return this.enableRoll();
+        }
+
+        if (type === "vcr") {
+            const canvas = document.createElement("canvas");
+            canvas.classList.add(type);
+            this.nodes.wrapper2.appendChild(canvas);
+
+            canvas.width = this.rect.width;
+            canvas.height = this.rect.height;
+
+            this.effects[type] = {
+                wrapper: this.nodes.wrapper2,
+                node: canvas,
+                ctx: canvas.getContext("2d"),
+                enabled: true,
+                config
+            };
+
+            this.generateVCRNoise();
+            return this;
+        }
+
+        let node = false;
+        let wrapper = this.nodes.wrapper2;
+
+        switch (type) {
+            case "wobblex":
+            case "wobbley":
+                wrapper.classList.add(type);
+                break;
+            case "scanlines":
+                node = document.createElement("div");
+                node.classList.add(type);
+                wrapper.appendChild(node);
+                break;
+            case "vignette":
+                wrapper = this.nodes.container;
+                node = document.createElement("div");
+                node.classList.add(type);
+                wrapper.appendChild(node);
+                break;
+            case "image":
+                wrapper = this.parent;
+                node = document.createElement('img');
+                node.classList.add(type);
+                node.src = config.src;
+                wrapper.appendChild(node);
+                break;
+            case "video":
+                wrapper = this.parent;
+                node = document.createElement('video');
+                node.classList.add(type);
+                node.src = config.src;
+                node.crossOrigin = 'anonymous';
+                node.autoplay = true;
+                node.muted = true;
+                node.loop = true;
+                wrapper.appendChild(node);
+                break;
+        }
+
+        this.effects[type] = {
+            wrapper,
+            node,
+            enabled: true,
+            config
+        };
+        return this;
+    }
+
+    remove(type) {
+        const obj = this.effects[type];
+        if (type in this.effects && !!obj.enabled) {
+            obj.enabled = false;
+
+            if (type === "roll" && obj.original) {
+                this.parent.appendChild(obj.original);
+            }
+
+            if (type === "vcr") {
+                clearInterval(this.vcrInterval);
+            }
+
+            if (type === "snow") {
+                cancelAnimationFrame(this.snowframe);
+            }
+
+            if (obj.node) {
+                obj.wrapper.removeChild(obj.node);
+            } else {
+                obj.wrapper.classList.remove(type);
+            }
+        }
+        return this;
+    }
+
+    enableRoll() {
+        const el = this.parent.firstElementChild;
+        if (el) {
+            const div = document.createElement("div");
+            div.classList.add("roller");
+            this.parent.appendChild(div);
+            div.appendChild(el);
+            div.appendChild(el.cloneNode(true));
+
+            this.effects.roll = {
+                enabled: true,
+                wrapper: this.parent,
+                node: div,
+                original: el
+            };
+        }
+    }
+
+    generateVCRNoise() {
+        const canvas = this.effects.vcr.node;
+        const config = this.effects.vcr.config;
+        const div = this.effects.vcr.node;
+
+        if (config.fps >= 60) {
+            cancelAnimationFrame(this.vcrInterval);
+            const animate = () => {
+                this.renderTrackingNoise();
+                this.vcrInterval = requestAnimationFrame(animate);
+            };
+            animate();
+        } else {
+            clearInterval(this.vcrInterval);
+            this.vcrInterval = setInterval(() => {
+                this.renderTrackingNoise();
+            }, 1000 / config.fps);
+        }
+    }
+
+    generateSnow(ctx) {
+        var w = ctx.canvas.width,
+            h = ctx.canvas.height,
+            d = ctx.createImageData(w, h),
+            b = new Uint32Array(d.data.buffer),
+            len = b.length;
+
+        for (var i = 0; i < len; i++) {
+            b[i] = ((255 * Math.random()) | 0) << 24;
+        }
+
+        ctx.putImageData(d, 0, 0);
+    }
+
+    renderTrackingNoise(radius = 2, xmax, ymax) {
+        const canvas = this.effects.vcr.node;
+        const ctx = this.effects.vcr.ctx;
+        const config = this.effects.vcr.config;
+        let posy1 = config.miny || 0;
+        let posy2 = config.maxy || canvas.height;
+        let posy3 = config.miny2 || 0;
+        const num = config.num || 20;
+
+        if (xmax === undefined) {
+            xmax = canvas.width;
+        }
+        if (ymax === undefined) {
+            ymax = canvas.height;
+        }
+
+        canvas.style.filter = `blur(${config.blur}px)`;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = `#fff`;
+
+        ctx.beginPath();
+        for (var i = 0; i <= num; i++) {
+            var x = Math.random(i) * xmax;
+            var y1 = getRandomInt(posy1 += 3, posy2);
+            var y2 = getRandomInt(0, posy3 -= 3);
+            ctx.fillRect(x, y1, radius, radius);
+            ctx.fillRect(x, y2, radius, radius);
+            ctx.fill();
+
+            this.renderTail(ctx, x, y1, radius);
+            this.renderTail(ctx, x, y2, radius);
+        }
+        ctx.closePath();
+    }
+
+    renderTail(ctx, x, y, radius) {
+        const n = getRandomInt(1, 50);
+        const dirs = [1, -1];
+        let rd = radius;
+        const dir = dirs[Math.floor(Math.random() * dirs.length)];
+        for (let i = 0; i < n; i++) {
+            const step = 0.01;
+            let r = getRandomInt((rd -= step), radius);
+            let dx = getRandomInt(1, 4);
+            radius -= 0.1;
+            dx *= dir;
+            ctx.fillRect((x += dx), y, r, r);
+            ctx.fill();
+        }
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
