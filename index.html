@@ -35,7 +35,7 @@
             <div class="loading-text">LOADING...</div>
         </div>
 
-        <!-- Background Video -->
+
         <video class="herovideo" id="bg_video" oncontextmenu="return false" playsinline loop muted>
             <source src="assets/hero_loop.mp4" type="video/mp4">
         </video>
@@ -71,6 +71,7 @@
             </div>
         </div>
         <audio id="music_audio" preload="metadata"></audio>
+
 
         <!-- About Me Photos -->
         <div id="about_me_photos" class="photos-wrapper">
@@ -188,20 +189,16 @@
         <div class="submenu-overlay" id="submenu_overlay">
 
             <video class="submenu-video" id="submenu_video" oncontextmenu="return false" playsinline loop muted>
-                <source src="assets/background.mp4" type="video/mp4">
+                <source src="assets/main1.mp4" type="video/mp4">
             </video>
 
-            <div class="submenu-reveal-2" id="reveal_2"></div>
-            <div class="submenu-reveal" id="reveal_1"></div>
+            <div class="submenu-bg-overlay" id="submenu_bg_overlay"></div>
+            <div class="submenu-click-backdrop" id="submenu_click_backdrop" aria-hidden="true"></div>
 
-            <div class="submenu-back" id="submenu_back_btn">
-                <span class="control-key">ESC</span>
-            </div>
 
-            <!-- Panels Wrapper -->
             <div class="submenu-panels-container">
-                <!-- Panel: SKILLS -->
-                <div class="submenu-panel" id="panel_skill">
+
+                <div class="submenu-panel submenu-panel--prose" id="panel_skill">
                     <div class="bold-shape-container">
                         <div class="bold-shape-bg"></div>
                         <div class="bold-shape-fg">
@@ -209,32 +206,19 @@
                             <p class="placeholder-text">
                                 I like photography and programming :D
                                 <iframe
-                                    src="https://github-readme-stats.hackclub.dev/api/wakatime?username=30121&api_domain=hackatime.hackclub.com&theme=shadow_blue&custom_title=Hackatime+Stats&layout=compact&cache_seconds=0&langs_count=8"
+                                    src="https://github-readme-stats.hackclub.dev/api/wakatime?username=30121&api_domain=hackatime.hackclub.com&theme=prussian&custom_title=Hackatime+Stats&layout=compact&cache_seconds=0&langs_count=8"
                                     width="600" height="200" frameborder="0" scrolling="no"></iframe>
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Panel: ITEMS -->
-                <div class="submenu-panel" id="panel_item">
-                    <div class="bold-shape-container">
-                        <div class="bold-shape-bg"></div>
-                        <div class="bold-shape-fg">
-                            <h2 class="placeholder-title">ITEMS</h2>
-                            <p class="placeholder-text">Inventory : <br>
-                                • HP PAVILLION dx-15xx (2020) <br>
-                                • Samsung WB30F (2013) <br>
-                                • PS4 Slim (2016) <br>
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
 
 
-                <!-- Panel: ABOUT ME -->
-                <div class="submenu-panel" id="panel_persona">
+
+
+                <div class="submenu-panel submenu-panel--prose" id="panel_persona">
                     <div class="bold-shape-container">
                         <div class="bold-shape-bg"></div>
                         <div class="bold-shape-fg">
@@ -251,45 +235,8 @@
 
 
 
-                <!-- Panel: SOCIAL LINK -->
-                <div class="submenu-panel" id="panel_socialLink">
-                    <div class="bold-shape-container">
-                        <div class="bold-shape-bg"></div>
-                        <div class="bold-shape-fg">
-                            <h2 class="placeholder-title">SOCIAL LINK</h2>
-                            <p class="placeholder-text">I don't use much social apps <span>(im lowkey
-                                    autistic)</span><br>
-                                Hit me up on mybe Discord (dakpol._) or prob <a
-                                    href="https://hackclub.enterprise.slack.com/team/U0AJAB37BUK"
-                                    target="_blank">Slack</a>
-                                (Warelovvvvvv)
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Panel: PROJECTS -->
-                <div class="submenu-panel" id="panel_calendar">
-                    <div class="bold-shape-container">
-                        <div class="bold-shape-bg"></div>
-                        <div class="bold-shape-fg">
-                            <h2 class="placeholder-title">PROJECTS</h2>
-                            <p class="placeholder-text">You can always check my github
-                                <span class="italic">(down below)</span><br>
-                                But most notable ones are : <br>
-                                • <a href="https://github.com/notwewnothing/SpotiFLac/releases/tag/v1.1.0"
-                                    target="_blank">AudioPhile</a>
-                                (it's not maintained tho)<br>
-                                • <a href="https://github.com/notwewnothing/workspace-commander"
-                                    target="_blank">MacroPad</a>
-                                (my project for flavortown)
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel: SYSTEM -->
-                <div class="submenu-panel" id="panel_system">
+                <div class="submenu-panel submenu-panel--prose" id="panel_system">
                     <div class="bold-shape-container">
                         <div class="bold-shape-bg"></div>
                         <div class="bold-shape-fg">
@@ -300,6 +247,332 @@
                                 <img src="assets/lain.gif" alt="lain dancing" style="width:100px;height:100px;">
                                 <img src="assets/lain.gif" alt="lain dancing" style="width:100px;height:100px;">
                             </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="submenu-panel panel-fullscreen" id="panel_item">
+                <div class="sc-root" id="sc_root">
+
+                    <div class="sc-bar-outer" id="sc_bar_0">
+                        <div class="sc-bar-red"></div>
+                        <div class="sc-bar">
+                            <img class="sc-char" src="assets/char1.png" alt="">
+                            <div class="sc-bar-fill"></div>
+                            <div class="sc-bar-shade"></div>
+                            <div class="sc-bar-content">
+                                <div class="sc-role">PC</div>
+                                <div class="sc-main">
+                                    <div class="sc-main-top">
+                                        <div class="sc-icon">💻</div>
+                                        <div class="sc-label">HP PAVILLION</div>
+                                    </div>
+                                </div>
+                                <div class="sc-stats">
+                                    <div class="sc-stat">
+                                        <div class="sc-stat-top">
+                                            <span class="sc-stat-tag"
+                                                style="color:#5865F2;border-color:#5865F2">BOUGHT</span>
+                                            <span class="sc-stat-num">2020</span>
+                                        </div>
+                                        <div class="sc-stat-bars">
+                                            <div class="sc-stat-bar-color" style="background:#5865F2"></div>
+                                            <div class="sc-stat-bar-black"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sc-bar-outer" id="sc_bar_1">
+                        <div class="sc-bar-red"></div>
+                        <div class="sc-bar">
+                            <img class="sc-char" src="assets/char2.png" alt="">
+                            <div class="sc-bar-fill"></div>
+                            <div class="sc-bar-shade"></div>
+                            <div class="sc-bar-content">
+                                <div class="sc-role">CAM</div>
+                                <div class="sc-main">
+                                    <div class="sc-main-top">
+                                        <div class="sc-icon">📷</div>
+                                        <div class="sc-label">SAMSUNG WB30F</div>
+                                    </div>
+                                </div>
+                                <div class="sc-stats">
+                                    <div class="sc-stat">
+                                        <div class="sc-stat-top">
+                                            <span class="sc-stat-tag"
+                                                style="color:#30a6e1;border-color:#30a6e1">MADE</span>
+                                            <span class="sc-stat-num">2013</span>
+                                        </div>
+                                        <div class="sc-stat-bars">
+                                            <div class="sc-stat-bar-color" style="background:#30a6e1"></div>
+                                            <div class="sc-stat-bar-black"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sc-bar-outer" id="sc_bar_2">
+                        <div class="sc-bar-red"></div>
+                        <div class="sc-bar">
+                            <img class="sc-char" src="assets/char3.png" alt="">
+                            <div class="sc-bar-fill"></div>
+                            <div class="sc-bar-shade"></div>
+                            <div class="sc-bar-content">
+                                <div class="sc-role">PS4</div>
+                                <div class="sc-main">
+                                    <div class="sc-main-top">
+                                        <div class="sc-icon">🎮</div>
+                                        <div class="sc-label">PLAYSTATION 4 (jilborken 🥀)</div>
+                                    </div>
+                                </div>
+                                <div class="sc-stats">
+                                    <div class="sc-stat">
+                                        <div class="sc-stat-top">
+                                            <span class="sc-stat-tag"
+                                                style="color:#E01E5A;border-color:#E01E5A">GOT</span>
+                                            <span class="sc-stat-num">2018</span>
+                                        </div>
+                                        <div class="sc-stat-bars">
+                                            <div class="sc-stat-bar-color" style="background:#E01E5A"></div>
+                                            <div class="sc-stat-bar-black"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sc-right-nav" id="sc_right_nav" style="opacity:0; display:none;">
+                    <span class="sc-nav-arrow left">◄</span>
+                    <span class="sc-nav-btn">LB</span>
+                    <span class="sc-nav-label" id="sc_nav_label">DISCORD</span>
+                    <span class="sc-nav-btn">RB</span>
+                    <span class="sc-nav-arrow right">►</span>
+                </div>
+                <div class="sc-footer" id="sc_footer">
+                    <div class="sc-footer-row"><span class="sc-footer-key">↑↓</span><span>SELECT</span></div>
+                    <div class="sc-footer-row"><span class="sc-footer-key">↵</span><span>OPEN</span></div>
+                </div>
+            </div>
+
+
+            <div class="submenu-panel panel-fullscreen" id="panel_socialLink_bars">
+                <div class="sc-root">
+                    <div class="sc-bar-outer">
+                        <div class="sc-bar-red"></div>
+                        <div class="sc-bar">
+                            <img class="sc-char" src="assets/char1.png" alt="">
+                            <div class="sc-bar-fill"></div>
+                            <div class="sc-bar-shade"></div>
+                            <div class="sc-bar-content">
+                                <div class="sc-role">DISCORD</div>
+                                <div class="sc-main">
+                                    <div class="sc-main-top">
+                                        <div class="sc-icon">💬</div>
+                                        <div class="sc-label">DISCORD</div>
+                                    </div>
+                                </div>
+                                <div class="sc-stats">
+                                    <div class="sc-stat">
+                                        <div class="sc-stat-top">
+                                            <span class="sc-stat-tag"
+                                                style="color:#5865F2;border-color:#5865F2">ID</span>
+                                            <span class="sc-stat-num">dakpol._</span>
+                                        </div>
+                                        <div class="sc-stat-bars">
+                                            <div class="sc-stat-bar-color" style="background:#5865F2"></div>
+                                            <div class="sc-stat-bar-black"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sc-bar-outer">
+                        <div class="sc-bar-red"></div>
+                        <div class="sc-bar">
+                            <img class="sc-char" src="assets/char2.png" alt="">
+                            <div class="sc-bar-fill"></div>
+                            <div class="sc-bar-shade"></div>
+                            <div class="sc-bar-content">
+                                <div class="sc-role">INSTA</div>
+                                <div class="sc-main">
+                                    <div class="sc-main-top">
+                                        <div class="sc-icon">📷</div>
+                                        <div class="sc-label">INSTAGRAM</div>
+                                    </div>
+                                </div>
+                                <div class="sc-stats">
+                                    <div class="sc-stat">
+                                        <div class="sc-stat-top">
+                                            <span class="sc-stat-tag"
+                                                style="color:#E1306C;border-color:#E1306C">@</span>
+                                            <span class="sc-stat-num">poldak._</span>
+                                        </div>
+                                        <div class="sc-stat-bars">
+                                            <div class="sc-stat-bar-color" style="background:#E1306C"></div>
+                                            <div class="sc-stat-bar-black"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sc-bar-outer">
+                        <div class="sc-bar-red"></div>
+                        <div class="sc-bar">
+                            <img class="sc-char" src="assets/char3.png" alt="">
+                            <div class="sc-bar-fill"></div>
+                            <div class="sc-bar-shade"></div>
+                            <div class="sc-bar-content">
+                                <div class="sc-role">SLACK</div>
+                                <div class="sc-main">
+                                    <div class="sc-main-top">
+                                        <div class="sc-icon">💼</div>
+                                        <div class="sc-label">SLACK</div>
+                                    </div>
+                                </div>
+                                <div class="sc-stats">
+                                    <div class="sc-stat">
+                                        <div class="sc-stat-top">
+                                            <span class="sc-stat-tag"
+                                                style="color:#E01E5A;border-color:#E01E5A">ID</span>
+                                            <span class="sc-stat-num">Warelovvvvvv</span>
+                                        </div>
+                                        <div class="sc-stat-bars">
+                                            <div class="sc-stat-bar-color" style="background:#E01E5A"></div>
+                                            <div class="sc-stat-bar-black"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sc-right-nav" style="opacity:0; display:none;">
+                    <span class="sc-nav-arrow left">◄</span>
+                    <span class="sc-nav-btn">LB</span>
+                    <span class="sc-nav-label">DISCORD</span>
+                    <span class="sc-nav-btn">RB</span>
+                    <span class="sc-nav-arrow right">►</span>
+                </div>
+                <div class="sc-footer">
+                    <div class="sc-footer-row"><span class="sc-footer-key">↑↓</span><span>SELECT</span></div>
+                    <div class="sc-footer-row"><span class="sc-footer-key">↵</span><span>OPEN</span></div>
+                </div>
+            </div>
+
+
+            <div class="submenu-panel panel-fullscreen" id="panel_calendar">
+                <div class="resume-overlay">
+                    <div class="resume-stack" id="rs_stack">
+                        <div class="resume-list-tag" id="rs_list_tag">LIST</div>
+                        <!-- Card 0 -->
+                        <div class="resume-card-wrap" id="rs_card_0" style="transition-delay: 0ms">
+                            <div class="resume-card">
+                                <div class="resume-badge">
+                                    <div class="resume-badge-text">I</div>
+                                </div>
+                                <div class="resume-card-inner">
+                                    <div class="resume-title">AUDIOPHILE</div>
+                                    <div class="resume-rank">
+                                        <div class="resume-rank-label">RANK</div>
+                                        <div class="resume-rank-number">1</div>
+                                    </div>
+                                </div>
+                                <div class="resume-subtitle-bar">
+                                    <div class="resume-subtitle">Music Tool / SpotiFLac</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card 1 -->
+                        <div class="resume-card-wrap" id="rs_card_1" style="transition-delay: 55ms">
+                            <div class="resume-card">
+                                <div class="resume-badge">
+                                    <div class="resume-badge-text">II</div>
+                                </div>
+                                <div class="resume-card-inner">
+                                    <div class="resume-title">MACROPAD</div>
+                                    <div class="resume-rank">
+                                        <div class="resume-rank-label">RANK</div>
+                                        <div class="resume-rank-number">2</div>
+                                    </div>
+                                </div>
+                                <div class="resume-subtitle-bar">
+                                    <div class="resume-subtitle">Workspace Commander</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="resume-card-wrap" id="rs_card_2" style="transition-delay: 110ms">
+                            <div class="resume-card">
+                                <div class="resume-badge">
+                                    <div class="resume-badge-text">III</div>
+                                </div>
+                                <div class="resume-card-inner">
+                                    <div class="resume-title">PERSONA UI</div>
+                                    <div class="resume-rank">
+                                        <div class="resume-rank-label">RANK</div>
+                                        <div class="resume-rank-number">3</div>
+                                    </div>
+                                </div>
+                                <div class="resume-subtitle-bar">
+                                    <div class="resume-subtitle">This Website</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="resume-card-wrap" id="rs_card_3" style="transition-delay: 165ms">
+                            <div class="resume-card">
+                                <div class="resume-badge">
+                                    <div class="resume-badge-text">IV</div>
+                                </div>
+                                <div class="resume-card-inner">
+                                    <div class="resume-title">COMING SOON ...</div>
+                                    <div class="resume-rank">
+                                        <div class="resume-rank-label">RANK</div>
+                                        <div class="resume-rank-number">4</div>
+                                    </div>
+                                </div>
+                                <div class="resume-subtitle-bar">
+                                    <div class="resume-subtitle">ISN'T THIS TEMPTING 👀</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detail Panel -->
+                    <div class="resume-detail-panel" id="rs_detail_panel" style="opacity: 0;">
+                        <div class="resume-detail-top">
+                            <div class="resume-detail-top-index" id="rs_detail_index">01</div>
+                            <div class="resume-detail-top-title" id="rs_detail_title">AUDIOPHILE</div>
+                            <div class="resume-detail-top-progress" id="rs_detail_progress">1/4</div>
+                        </div>
+
+                        <div class="resume-detail-list">
+                            <div class="resume-detail-row">
+                                <div class="resume-detail-row-index">01</div>
+                                <div class="resume-detail-row-title" id="rs_detail_status_title">Status</div>
+                                <div class="resume-detail-status" id="rs_detail_status">Complete</div>
+                            </div>
+                        </div>
+
+                        <div class="resume-detail-bottom">
+                            <div class="resume-detail-bottom-title">DETAILS</div>
+                            <div class="resume-detail-bullets" id="rs_detail_bullets">
+                                <div class="resume-detail-bullet">- It's not maintained tho</div>
+                                <div class="resume-detail-bullet"><a
+                                        href="https://github.com/notwewnothing/SpotiFLac/releases/tag/v1.1.0"
+                                        target="_blank">View on GitHub</a></div>
+                            </div>
                         </div>
                     </div>
                 </div>

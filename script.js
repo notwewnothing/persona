@@ -22,11 +22,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const bgVideo = document.getElementById('bg_video');
     const container = document.getElementById('menu_container');
 
-    // Submenu Elements
+
     const submenuOverlay = document.getElementById('submenu_overlay');
-    const reveal1 = document.getElementById('reveal_1');
-    const reveal2 = document.getElementById('reveal_2');
-    const submenuBackBtn = document.getElementById('submenu_back_btn');
+    const submenuBgOverlay = document.getElementById('submenu_bg_overlay');
+    const submenuClickBackdrop = document.getElementById('submenu_click_backdrop');
     const submenuVideo = document.getElementById('submenu_video');
     const panels = document.querySelectorAll('.submenu-panel');
     const music = document.getElementById('music-toggle');
@@ -35,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentPanel = null;
 
 
-    // Per-item highlight transforms (keyed by element id)
+
     const highlightData = {
         m_skill: { transform: 'scale(130%) rotate(-28deg) translate(28px, 10px)', prefix: 'skill', panelId: 'panel_skill' },
         m_item: { transform: 'scale(130%) rotate(-14deg) translate(36px, 6px)', prefix: 'item', panelId: 'panel_item' },
@@ -43,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
         m_persona: { transform: 'scale(130%) rotate(-18deg) translate(24px, 2px)', prefix: 'persona', panelId: 'panel_persona' },
         m_stats: { transform: 'scale(130%) translate(40px, -4px)', prefix: 'stats', panelId: 'panel_stats' },
         m_quest: { transform: 'scale(130%) rotate(-12deg) translate(36px, 4px)', prefix: 'quest', panelId: 'panel_quest' },
-        m_socialLink: { transform: 'scale(130%) rotate(-6deg) translate(28px, -2px)', prefix: 'socialLink', panelId: 'panel_socialLink' },
+        m_socialLink: { transform: 'scale(130%) rotate(-6deg) translate(28px, -2px)', prefix: 'socialLink', panelId: 'panel_socialLink_bars' },
         m_calendar: { transform: 'scale(130%) rotate(-4deg) translate(26px, 0px)', prefix: 'calendar', panelId: 'panel_calendar' },
         m_system: { transform: 'scale(130%) rotate(8deg) translate(32px, 0px)', prefix: 'system', panelId: 'panel_system' },
     };
@@ -75,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
         promises.push(waitForVideo(bgVideo));
         promises.push(waitForVideo(submenuVideo));
 
-        // Wait for all images in the document (including SVGs and GIFs)
+
         const allImages = document.querySelectorAll('img');
         allImages.forEach(img => promises.push(waitForImage(img)));
 
@@ -118,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (bgVideo) {
-            bgVideo.play().catch(() => {});
+            bgVideo.play().catch(() => { });
         }
 
         window.dispatchEvent(new Event('resize'));
@@ -181,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
             i.style.color = '';
         });
 
-        // Hide all highlight wrappers
+
         document.querySelectorAll('.highlight-wrapper').forEach(wrapper => {
             wrapper.classList.remove('active');
             wrapper.style.opacity = '0';
@@ -192,12 +191,12 @@ document.addEventListener("DOMContentLoaded", function () {
             el.style.opacity = '0';
         });
 
-        // Apply highlight for the selected item
+
         const data = highlightData[itemSpan.id];
         if (data) {
             itemSpan.style.transform = data.transform;
             itemSpan.style.zIndex = '1';
-            itemSpan.style.color = 'black'; // Ensure color change
+            itemSpan.style.color = 'black';
 
             // Show the wrapper and make it active for pulse animation
             const wrapper = document.getElementById('hw_' + data.prefix);
@@ -227,8 +226,80 @@ document.addEventListener("DOMContentLoaded", function () {
         itemSpan.focus();
     }
 
+
+
     // Initial selection is now handled in the load event listener above
 
+    const HERO_BAR_PANEL_IDS = new Set(['panel_item', 'panel_socialLink_bars']);
+    const SOCIALS_TRANSITION_PANEL_IDS = new Set([
+        'panel_item',
+        'panel_socialLink_bars',
+        'panel_calendar',
+    ]);
+    const PROSE_PANEL_IDS = new Set(['panel_skill', 'panel_persona', 'panel_system']);
+
+    function isHeroBarsPanel(panel) {
+        return panel && HERO_BAR_PANEL_IDS.has(panel.id);
+    }
+
+    function getTransitionVariant(panel) {
+        if (panel && SOCIALS_TRANSITION_PANEL_IDS.has(panel.id)) return 'socials';
+        if (panel && PROSE_PANEL_IDS.has(panel.id)) return 'default';
+        return 'default';
+    }
+
+    function getSubmenuChrome(panel) {
+        if (!panel) {
+            return { overlay: false, menuShift: false, photos: false };
+        }
+        if (HERO_BAR_PANEL_IDS.has(panel.id)) {
+            return { overlay: true, menuShift: true, photos: false };
+        }
+        if (panel.id === 'panel_calendar') {
+            return { overlay: true, menuShift: false, photos: false };
+        }
+        if (PROSE_PANEL_IDS.has(panel.id)) {
+            return { overlay: true, menuShift: false, photos: true };
+        }
+        return { overlay: false, menuShift: false, photos: false };
+    }
+
+    function applySubmenuChrome(chrome) {
+        const { overlay, menuShift, photos } = chrome;
+
+        if (container) {
+            container.classList.toggle('menu-shifted', !!menuShift);
+        }
+        if (submenuBgOverlay) {
+            submenuBgOverlay.classList.toggle('visible', !!overlay);
+        }
+        if (submenuVideo) {
+            if (overlay) {
+                submenuVideo.classList.add('visible');
+                submenuVideo.play().catch(() => { });
+            } else {
+                submenuVideo.classList.remove('visible');
+                setTimeout(() => submenuVideo.pause(), 500);
+            }
+        }
+
+        const photosWrapper = document.getElementById('about_me_photos');
+        if (photosWrapper) {
+            if (photos) {
+                photosWrapper.classList.add('visible');
+                document.body.classList.add('submenu-photos-active');
+                randomizePhotos();
+            } else {
+                photosWrapper.classList.remove('visible');
+                document.body.classList.remove('submenu-photos-active');
+                hidePhotos();
+            }
+        }
+    }
+
+    function syncSubmenuChrome() {
+        applySubmenuChrome(getSubmenuChrome(currentPanel));
+    }
 
     function openSubmenu() {
         if (isSubmenuOpen) return;
@@ -236,59 +307,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const data = highlightData[itemSpans[currentIndex].id];
         currentPanel = document.getElementById(data.panelId);
+        const variant = getTransitionVariant(currentPanel);
 
-
-        // Play submenu video
-        if (submenuVideo) {
-            submenuVideo.play().catch(e => console.log("Video auto-play prevented:", e));
-        }
-
-        // Get coordinates of the clicked item to center the reveal
-        const rect = menuItems[currentIndex].getBoundingClientRect();
-        const x = rect.left + rect.width / 2;
-        const y = rect.top + rect.height / 2;
-
-        // Use percentage coordinates for clip-path
-        const xPct = (x / window.innerWidth) * 100 + '%';
-        const yPct = (y / window.innerHeight) * 100 + '%';
-        const x2Pct = ((x / window.innerWidth) * 100 - 5) + '%';
-
-        reveal1.style.setProperty('--reveal-x', xPct);
-        reveal1.style.setProperty('--reveal-y', yPct);
-        reveal2.style.setProperty('--reveal-x2', x2Pct);
-        reveal2.style.setProperty('--reveal-y2', yPct);
-
-        // Start overlay & reveal transition
+        document.body.classList.add('submenu-open');
         submenuOverlay.classList.add('active');
 
-        // Show random photos when submenu opens
-        const wrapper = document.getElementById('about_me_photos');
-        if (wrapper) {
-            wrapper.classList.add('visible');
-            randomizePhotos();
-        }
+        const panel = document.createElement('div');
+        panel.className = `transition-panel ${variant}-panel`;
+        panel.style.zIndex = '9999';
+        document.body.appendChild(panel);
 
-        // Slight delay to allow CSS properties to update
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                reveal1.classList.add('expanding');
-                reveal2.classList.add('expanding');
+        setTimeout(() => {
+            applySubmenuChrome(getSubmenuChrome(currentPanel));
 
-                // Show the specific panel content, video, and back button
-                if (currentPanel) {
-                    currentPanel.classList.remove('hiding');
-                    currentPanel.classList.add('visible');
-                }
-                if (submenuVideo) {
-                    submenuVideo.classList.add('visible');
+            if (currentPanel) {
+                currentPanel.classList.remove('hiding');
+                currentPanel.classList.add('visible');
+            }
 
-                }
-                if (music)
-                    setTimeout(() => {
-                        submenuBackBtn.classList.add('visible');
-                    }, 400);
-            });
-        });
+            if (isHeroBarsPanel(currentPanel)) initSocialsPanel(currentPanel);
+            else if (data.prefix === 'calendar') initResumePanel();
+
+        }, 280);
+
+        setTimeout(() => {
+            if (panel.parentNode) panel.parentNode.removeChild(panel);
+        }, 800);
     }
 
     function closeSubmenu() {
@@ -296,45 +340,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const panelToHide = currentPanel;
 
-
         if (panelToHide) {
             panelToHide.classList.remove('visible');
             panelToHide.classList.add('hiding');
         }
-        if (submenuVideo) {
-            submenuVideo.classList.remove('visible');
-            setTimeout(() => submenuVideo.pause(), 500); // Pause video after fade out
-        }
-        submenuBackBtn.classList.remove('visible');
 
-        // Collapse the circular reveal
-        reveal1.classList.remove('expanding');
-        reveal2.classList.remove('expanding');
-        reveal1.classList.add('collapsing');
-        reveal2.classList.add('collapsing');
+        applySubmenuChrome({ overlay: false, menuShift: false, photos: false });
 
-        // Hide photos when submenu closes
-        const wrapper = document.getElementById('about_me_photos');
-        if (wrapper) {
-            wrapper.classList.remove('visible');
-            hidePhotos();
-        }
+        cleanupSocialsPanel();
+        cleanupResumePanel();
 
-        // Wait for the collapse animation
         setTimeout(() => {
             isSubmenuOpen = false;
             submenuOverlay.classList.remove('active');
-            reveal1.classList.remove('collapsing');
-            reveal2.classList.remove('collapsing');
+            document.body.classList.remove('submenu-open', 'submenu-photos-active');
 
             if (panelToHide) {
                 panelToHide.classList.remove('hiding');
             }
 
-
-            // Refocus main menu
             selectItem(currentIndex);
-        }, 500);
+        }, 400);
     }
 
 
@@ -342,6 +368,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // Keyboard navigation
     document.addEventListener("keydown", function (event) {
         if (isSubmenuOpen) {
+            // Handle custom panel keys
+            if (isHeroBarsPanel(currentPanel)) {
+                if (handleSocialsKey(event)) return;
+            }
+            if (currentPanel && currentPanel.id === 'panel_calendar') {
+                if (handleResumeKey(event)) return;
+            }
+
             // Handle submenu close
             if (event.key === "Escape" || event.key === "Backspace" || (event.key === "a" || event.key === "A")) {
                 closeSubmenu();
@@ -390,29 +424,25 @@ document.addEventListener("DOMContentLoaded", function () {
                         currentPanel.classList.add('hiding');
                     }
 
+                    // Cleanup old custom panels
+                    cleanupSocialsPanel();
+                    cleanupResumePanel();
+
                     selectItem(index, true);
 
                     const data = highlightData[itemSpans[currentIndex].id];
                     currentPanel = document.getElementById(data.panelId);
 
-                    // Update reveal positions
-                    const rect = menuItems[currentIndex].getBoundingClientRect();
-                    const x = rect.left + rect.width / 2;
-                    const y = rect.top + rect.height / 2;
-                    const xPct = (x / window.innerWidth) * 100 + '%';
-                    const yPct = (y / window.innerHeight) * 100 + '%';
-                    const x2Pct = ((x / window.innerWidth) * 100 - 5) + '%';
-
-                    reveal1.style.setProperty('--reveal-x', xPct);
-                    reveal1.style.setProperty('--reveal-y', yPct);
-                    reveal2.style.setProperty('--reveal-x2', x2Pct);
-                    reveal2.style.setProperty('--reveal-y2', yPct);
+                    syncSubmenuChrome();
 
                     if (currentPanel) {
                         currentPanel.classList.remove('hiding');
                         requestAnimationFrame(() => {
                             requestAnimationFrame(() => {
                                 currentPanel.classList.add('visible');
+
+                                if (isHeroBarsPanel(currentPanel)) initSocialsPanel(currentPanel);
+                                else if (data.prefix === "calendar") initResumePanel();
                             });
                         });
                     }
@@ -425,21 +455,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    if (submenuBackBtn) {
-        submenuBackBtn.addEventListener("click", function (e) {
+    if (submenuClickBackdrop) {
+        submenuClickBackdrop.addEventListener('click', function (e) {
             e.stopPropagation();
-            closeSubmenu();
+            if (isSubmenuOpen) closeSubmenu();
         });
     }
 
-    // Close when clicking the submenu background
-    document.addEventListener("click", function (event) {
-        if (isSubmenuOpen) {
-            if (!event.target.closest('.bold-shape-container') && !event.target.closest('.submenu-panel') && !event.target.closest('.submenu-back') && !event.target.closest('.text')) {
-                closeSubmenu();
-            }
-        }
-    });
+    if (submenuBgOverlay) {
+        submenuBgOverlay.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (isSubmenuOpen) closeSubmenu();
+        });
+    }
 
 
     const PLAYLIST = [
@@ -617,6 +645,211 @@ document.addEventListener("DOMContentLoaded", function () {
         photos.forEach(photo => {
             photo.classList.remove('show');
         });
+    }
+
+    // --- Socials Panel Logic (ITEMS + SOCIAL LINK — independent instances) ---
+    let scActiveIndex = 0;
+    let scPanelEl = null;
+    let scBars = [];
+    let scBarHandlers = [];
+
+    function initSocialsPanel(panelEl) {
+        cleanupSocialsPanel();
+        scPanelEl = panelEl || document.getElementById('panel_item');
+        if (!scPanelEl) return;
+
+        scActiveIndex = 0;
+        scBars = Array.from(scPanelEl.querySelectorAll('.sc-bar-outer'));
+
+        scBars.forEach((bar, i) => {
+            bar.classList.add('sc-mounted');
+            const onEnter = () => {
+                scActiveIndex = i;
+                updateSocialsSelection();
+            };
+            const onClick = () => openSocialsLink();
+            bar.addEventListener('mouseenter', onEnter);
+            bar.addEventListener('click', onClick);
+            scBarHandlers.push({ bar, onEnter, onClick });
+        });
+
+        const scFooter = scPanelEl.querySelector('.sc-footer');
+        if (scFooter) scFooter.classList.add('sc-mounted');
+
+        const scRightNav = scPanelEl.querySelector('.sc-right-nav');
+        if (scRightNav) {
+            scRightNav.style.display = 'flex';
+            setTimeout(() => { scRightNav.style.opacity = '1'; }, 100);
+        }
+
+        updateSocialsSelection();
+    }
+
+    function cleanupSocialsPanel() {
+        scBarHandlers.forEach(({ bar, onEnter, onClick }) => {
+            bar.removeEventListener('mouseenter', onEnter);
+            bar.removeEventListener('click', onClick);
+            bar.classList.remove('sc-mounted');
+            bar.classList.remove('active');
+        });
+        scBarHandlers = [];
+
+        if (scPanelEl) {
+            const scFooter = scPanelEl.querySelector('.sc-footer');
+            if (scFooter) scFooter.classList.remove('sc-mounted');
+
+            const scRightNav = scPanelEl.querySelector('.sc-right-nav');
+            if (scRightNav) {
+                scRightNav.style.opacity = '0';
+                setTimeout(() => { scRightNav.style.display = 'none'; }, 400);
+            }
+        }
+
+        scBars = [];
+        scPanelEl = null;
+    }
+
+    function updateSocialsSelection() {
+        scBars.forEach((bar, i) => {
+            if (i === scActiveIndex) bar.classList.add('active');
+            else bar.classList.remove('active');
+        });
+        const labels = ['ITEM 1', 'ITEM 2', 'ITEM 3'];
+        const labelEl = scPanelEl ? scPanelEl.querySelector('.sc-nav-label') : null;
+        if (labelEl) labelEl.textContent = labels[scActiveIndex] || labels[0];
+    }
+
+    function openSocialsLink() {
+        const links = [
+            null, // Discord doesn't have a direct web link
+            'https://www.instagram.com/poldak._/',
+            'https://hackclub.enterprise.slack.com/team/U0AJAB37BUK'
+        ];
+        const link = links[scActiveIndex];
+        if (link) window.open(link, '_blank');
+    }
+
+    function handleSocialsKey(event) {
+        if (event.key === "ArrowDown" || event.key === "s" || event.key === "S") {
+            scActiveIndex = (scActiveIndex + 1) % scBars.length;
+            updateSocialsSelection();
+            return true;
+        }
+        if (event.key === "ArrowUp" || event.key === "w" || event.key === "W") {
+            scActiveIndex = (scActiveIndex - 1 + scBars.length) % scBars.length;
+            updateSocialsSelection();
+            return true;
+        }
+        if (event.key === "Enter" || event.key === " " || event.key === "b" || event.key === "B") {
+            openSocialsLink();
+            return true;
+        }
+        return false;
+    }
+
+
+    // --- Resume Panel Logic ---
+    let rsActiveIndex = 0;
+    const rsCards = document.querySelectorAll('.resume-card-wrap');
+
+    function initResumePanel() {
+        rsActiveIndex = 0;
+        updateResumeSelection();
+
+        const listTag = document.getElementById('rs_list_tag');
+        if (listTag) listTag.classList.add('rs-mounted');
+
+        rsCards.forEach((card, i) => {
+            card.classList.add('rs-mounted');
+            card.addEventListener('mouseenter', () => {
+                rsActiveIndex = i;
+                updateResumeSelection();
+            });
+            card.addEventListener('click', () => {
+                openResumeLink();
+            });
+        });
+
+        const detailPanel = document.getElementById('rs_detail_panel');
+        if (detailPanel) {
+            setTimeout(() => { detailPanel.style.opacity = '1'; }, 200);
+        }
+    }
+
+    function cleanupResumePanel() {
+        rsCards.forEach(card => {
+            card.classList.remove('rs-mounted');
+            card.classList.remove('active');
+        });
+        const listTag = document.getElementById('rs_list_tag');
+        if (listTag) listTag.classList.remove('rs-mounted');
+
+        const detailPanel = document.getElementById('rs_detail_panel');
+        if (detailPanel) detailPanel.style.opacity = '0';
+    }
+
+    function updateResumeSelection() {
+        rsCards.forEach((card, i) => {
+            if (i === rsActiveIndex) card.classList.add('active');
+            else card.classList.remove('active');
+        });
+
+        // Update details panel
+        const titles = ['AUDIOPHILE', 'MACROPAD', 'PERSONA UI', 'NOTHING TO SEE HERE 🤨'];
+        const subtexts = [
+            "- It's not maintained tho",
+            "- My project for flavortown",
+            "- Built with plain HTML/CSS/JS",
+            "- Ngl I added this cuz 3 items looked boring"
+        ];
+        const links = [
+            'https://github.com/notwewnothing/SpotiFLac/releases/tag/v1.1.0',
+            'https://github.com/notwewnothing/workspace-commander',
+            'https://github.com/notwewnothing/persona',
+            null
+        ];
+
+        document.getElementById('rs_detail_index').textContent = '0' + (rsActiveIndex + 1);
+        document.getElementById('rs_detail_title').textContent = titles[rsActiveIndex];
+        document.getElementById('rs_detail_progress').textContent = (rsActiveIndex + 1) + '/4';
+
+        const bulletsContainer = document.getElementById('rs_detail_bullets');
+        if (bulletsContainer) {
+            let html = `<div class="resume-detail-bullet">${subtexts[rsActiveIndex]}</div>`;
+            if (links[rsActiveIndex]) {
+                html += `<div class="resume-detail-bullet"><a href="${links[rsActiveIndex]}" target="_blank">View on GitHub</a></div>`;
+            }
+            bulletsContainer.innerHTML = html;
+        }
+    }
+
+    function openResumeLink() {
+        const links = [
+            'https://github.com/notwewnothing/SpotiFLac/releases/tag/v1.1.0',
+            'https://github.com/notwewnothing/workspace-commander',
+            'https://github.com/notwewnothing/persona',
+            null
+        ];
+        const link = links[rsActiveIndex];
+        if (link) window.open(link, '_blank');
+    }
+
+    function handleResumeKey(event) {
+        if (event.key === "ArrowDown" || event.key === "s" || event.key === "S") {
+            rsActiveIndex = (rsActiveIndex + 1) % rsCards.length;
+            updateResumeSelection();
+            return true;
+        }
+        if (event.key === "ArrowUp" || event.key === "w" || event.key === "W") {
+            rsActiveIndex = (rsActiveIndex - 1 + rsCards.length) % rsCards.length;
+            updateResumeSelection();
+            return true;
+        }
+        if (event.key === "Enter" || event.key === " " || event.key === "b" || event.key === "B") {
+            openResumeLink();
+            return true;
+        }
+        return false;
     }
 });
 
@@ -936,3 +1169,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }, 100);
 });
+
