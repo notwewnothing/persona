@@ -1345,7 +1345,7 @@ canvas.snow {
 }
 
 canvas.snow {
-    background-color: #aaa;
+    background-color: transparent;
     opacity: 0.2;
 }
 

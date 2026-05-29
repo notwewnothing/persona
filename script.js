@@ -48,42 +48,115 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
 
-    function waitForVideo(video) {
+    const PRELOAD_MAX_MS = 10000;
+
+    function waitForVideo(video, timeoutMs = 8000) {
         return new Promise((resolve) => {
-            if (!video) { resolve(); return; }
-            // If the video already has enough data, resolve immediately
-            if (video.readyState >= 4) { resolve(); return; }
-            video.addEventListener('canplaythrough', () => resolve(), { once: true });
-            // Start loading if not already
-            video.load();
+            if (!video) {
+                resolve();
+                return;
+            }
+
+            let settled = false;
+            const finish = () => {
+                if (settled) return;
+                settled = true;
+                resolve();
+            };
+
+            const timer = window.setTimeout(finish, timeoutMs);
+
+            if (video.readyState >= 3) {
+                window.clearTimeout(timer);
+                finish();
+                return;
+            }
+
+            const onReady = () => {
+                window.clearTimeout(timer);
+                finish();
+            };
+
+            video.addEventListener('canplay', onReady, { once: true });
+            video.addEventListener('loadeddata', onReady, { once: true });
+            video.addEventListener('canplaythrough', onReady, { once: true });
+            video.addEventListener('error', onReady, { once: true });
+
+            try {
+                if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) {
+                    video.load();
+                }
+            } catch (_) {
+                onReady();
+            }
         });
     }
 
-    function waitForImage(img) {
+    function waitForImage(img, timeoutMs = 5000) {
         return new Promise((resolve) => {
-            if (img.complete && img.naturalWidth > 0) { resolve(); return; }
-            img.addEventListener('load', () => resolve(), { once: true });
-            img.addEventListener('error', () => resolve(), { once: true });
+            if (!img) {
+                resolve();
+                return;
+            }
+
+            let settled = false;
+            const finish = () => {
+                if (settled) return;
+                settled = true;
+                resolve();
+            };
+
+            const timer = window.setTimeout(finish, timeoutMs);
+
+            if (img.complete) {
+                window.clearTimeout(timer);
+                finish();
+                return;
+            }
+
+            img.addEventListener('load', () => {
+                window.clearTimeout(timer);
+                finish();
+            }, { once: true });
+            img.addEventListener('error', () => {
+                window.clearTimeout(timer);
+                finish();
+            }, { once: true });
         });
+    }
+
+    function preloadSubmenuVideoInBackground() {
+        if (!submenuVideo) return;
+        waitForVideo(submenuVideo, 20000).catch(() => { });
+        try {
+            if (submenuVideo.networkState === HTMLMediaElement.NETWORK_EMPTY) {
+                submenuVideo.load();
+            }
+        } catch (_) { /* ignore */ }
     }
 
     function preloadAllAssets() {
-        const promises = [];
+        const promises = [waitForVideo(bgVideo, 8000)];
 
-        // Wait for both videos
-        promises.push(waitForVideo(bgVideo));
-        promises.push(waitForVideo(submenuVideo));
+        document.querySelectorAll('img').forEach((img) => {
+            promises.push(waitForImage(img));
+        });
 
-
-        const allImages = document.querySelectorAll('img');
-        allImages.forEach(img => promises.push(waitForImage(img)));
-
-        // Wait for fonts
         if (document.fonts && document.fonts.ready) {
-            promises.push(document.fonts.ready);
+            promises.push(
+                Promise.race([
+                    document.fonts.ready,
+                    new Promise((resolve) => window.setTimeout(resolve, 3000)),
+                ])
+            );
         }
 
-        return Promise.all(promises);
+        preloadSubmenuVideoInBackground();
+
+        return Promise.race([
+            Promise.all(promises),
+            new Promise((resolve) => window.setTimeout(resolve, PRELOAD_MAX_MS)),
+        ]);
     }
 
     let desktopExperienceStarted = false;
@@ -144,7 +217,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         desktopExperienceStarted = true;
-        preloadAllAssets().then(() => applyDesktopReadyState(animateMenu));
+        preloadAllAssets()
+            .then(() => applyDesktopReadyState(animateMenu))
+            .catch(() => applyDesktopReadyState(animateMenu));
     }
 
     function handleViewportChange() {
@@ -160,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isDesktopViewport()) {
         activateDesktopExperience(true);
     } else {
-        preloadAllAssets().then(hideLoadingScreen);
+        preloadAllAssets().then(hideLoadingScreen).catch(hideLoadingScreen);
     }
 
     // Idle animation removed per user request
@@ -1153,7 +1228,9 @@ class ScreenEffect {
 
 document.addEventListener("DOMContentLoaded", () => {
     const screen = new ScreenEffect("#screen", {});
-    setTimeout(() => {
+
+    function initScreenEffects() {
+        if (screen.effects.snow) return;
         screen.add("vignette");
         screen.add("scanlines");
         screen.add("vcr", {
@@ -1167,6 +1244,20 @@ document.addEventListener("DOMContentLoaded", () => {
         screen.add("snow", {
             opacity: 0.2
         });
-    }, 100);
+    }
+
+    if (document.body.classList.contains("loaded")) {
+        initScreenEffects();
+    } else {
+        const onReady = () => {
+            if (document.body.classList.contains("loaded")) {
+                initScreenEffects();
+                observer.disconnect();
+            }
+        };
+        const observer = new MutationObserver(onReady);
+        observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+        window.setTimeout(initScreenEffects, 12000);
+    }
 });
 
